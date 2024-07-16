@@ -1,7 +1,54 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  --primarycolor: #6495ed;
+  --secondrycolor: #faf0e6;
+  --primarybgcolor: #000;
+  --secondarybgcolor: #F8F7FA;
+  --teciarybgcolor: #D1410C;
+  font-size: 0.7rem;
 }
 
+.fineyourmatch {
+  background-image: url(./assets/date-2276564_1280.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  width: 100vw;
+}
+
+button {
+  background-color: var(--teciarybgcolor);
+  color: var(--secondrycolor);
+  border: none;
+  border-radius: 20px;
+  font-size: smaller;
+  padding: 0.6rem;
+  margin-top: 21rem;
+  margin-right: 55rem;
+  font-size: 0.6rem;
+}
+
+.button-link {
+  color: var(--secondarybgcolor);
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  color: var(--primarybgcolor);
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.iconCategoryWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem;
+  padding: 2rem;
+}
