@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.7.2",
     "google-map-react": "^2.2.1",
+=======
+>>>>>>> 294db68 (inserted navbar home page picture and iconwrapper)
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",

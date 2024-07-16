@@ -2,13 +2,18 @@
   max-width: 1280px;
   text-align: center;
   --primarycolor: #6495ed;
+<<<<<<< HEAD
   --secondrycolor: #F2F2F2;
+=======
+  --secondrycolor: #faf0e6;
+>>>>>>> 294db68 (inserted navbar home page picture and iconwrapper)
   --primarybgcolor: #000;
   --secondarybgcolor: #F8F7FA;
   --teciarybgcolor: #D1410C;
   font-size: 0.7rem;
 }
 
+<<<<<<< HEAD
 .App {
   text-align: center;
   display: flex;
@@ -74,15 +79,25 @@ p {
   font-size: 0.7rem;
 }
 
+=======
+>>>>>>> 294db68 (inserted navbar home page picture and iconwrapper)
 .fineyourmatch {
   background-image: url(./assets/date-2276564_1280.jpg);
   background-size: cover;
   background-position: center;
+<<<<<<< HEAD
   height: 70vh;
   width: 99vw;
 }
 
 .fineyourmatch button {
+=======
+  height: 60vh;
+  width: 100vw;
+}
+
+button {
+>>>>>>> 294db68 (inserted navbar home page picture and iconwrapper)
   background-color: var(--teciarybgcolor);
   color: var(--secondrycolor);
   border: none;
@@ -166,4 +181,6 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin: 3rem;
+  padding: 2rem;
 }

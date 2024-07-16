@@ -1,56 +1,41 @@
 import React, { useState } from 'react';
-import EventForm from './EventForm';
-import { Login } from './Login';
-import { Register } from './Register';
-import './App.css'; // Import your CSS file here
-import React, { useState } from "react";
-import { Login } from "./Login";
-import { Register } from "./Register";
-import Homepage from "./Components/Home-page";
+import EventForm from './EventForm'; // Make sure this component is defined
+import Login from './Login'; // Import the Login component
+import Register from './Register'; // Import the Register component
+import Homepage from './Components/Home-page'; // Import the Homepage component
+import NavBar from './Components/Navbar'; // Import the NavBar component
+import Iconwrapper from './Components/Iconwrapper'; // Import the Iconwrapper component
+import './App.css';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
-  }
+  };
 
   return (
     <div>
       <h1>Event Management System</h1>
       <EventForm />
       <div className="App">
-        {currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />}
+        {currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />}
       </div>
       <header>
-        {/* Include your NavBar component here */}
+        <NavBar /> {/* Include your NavBar component here */}
       </header>
       <body>
-        <div className='fineyourmatch'>
-          <button><a href='https://www.eventbrite.com/b/local/home-and-lifestyle/dating/' className="button-link">Find your next date</a></button>
+        <div className="fineyourmatch">
+          <button>
+            <a href="https://www.eventbrite.com/b/local/home-and-lifestyle/dating/" className="button-link">
+              Find your next date
+            </a>
+          </button>
         </div>
-        {/* Include your Iconwrapper component here */}
-        <Iconwrapper />
-        <Trend />
-        <Moreevents />
-        <Popular />
-        <About />
+        <Iconwrapper /> {/* Include your Iconwrapper component here */}
       </body>
     </div>
   );
-
-  <>
-    <body>
-      <Homepage />  
-    </body>
-    <div className="App">
-      {
-        currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
-      }
-    </div>
-  </>
-  
-
 }
 
 export default App;
