@@ -11,7 +11,7 @@ export const Register = (props) => {
     }
 
     return (
-        <div className="auth-form-container">
+        <div className="container">
             <h2>Register</h2>
         <form className="register-form" onSubmit={handleSubmit}>
             <label htmlFor="name">Full name</label>
