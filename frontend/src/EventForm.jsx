@@ -55,29 +55,29 @@ const EventForm = () => {
   };
 
   return (
-    <div className='event'>
+    <div>
       <form onSubmit={handleCreateEvent}>
-        <input className='events'
+        <input
           type="text"
           name="title"
           placeholder="Event Title"
           value={eventData.title}
           onChange={handleInputChange}
         />
-        <input className='events'
+        <input
           type="date"
           name="date"
           value={eventData.date}
           onChange={handleInputChange}
         />
-        <input className='events'
+        <input
           type="text"
           name="location"
           placeholder="Event Location"
           value={eventData.location}
           onChange={handleInputChange}
         />
-        <textarea className='events'
+        <textarea
           name="description"
           placeholder="Event Description"
           value={eventData.description}
