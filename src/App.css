@@ -1,8 +1,17 @@
-/* .event {
+.event {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 2px;
   margin: auto;
+  border: 10px;
 }
- */
+
+.events {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 20px;
+  border: 2px solid;
+}
