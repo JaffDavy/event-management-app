@@ -2,10 +2,21 @@
   max-width: 1280px;
   text-align: center;
   --primarycolor: #6495ed;
-  --secondrycolor: #faf0e6;
+  --secondrycolor: #F2F2F2;
   --primarybgcolor: #000;
   --secondarybgcolor: #F8F7FA;
   --teciarybgcolor: #D1410C;
+  font-size: 0.7rem;
+}
+
+header {
+  position: fixed;
+  background-color: var(--secondarybgcolor);
+  color: var(--primarybgcolor);
+  width: 100%;
+}
+
+p {
   font-size: 0.7rem;
 }
 
@@ -49,6 +60,25 @@ button {
 .iconCategoryWrapper {
   display: flex;
   justify-content: space-between;
-  margin: 3rem;
-  padding: 2rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--secondrycolor);
+}
+
+.berlin-trend {
+  background-color: var(--secondrycolor);
+}
+
+.cards {
+  display: flex;
+  margin-left: 9rem;
+  margin-top: 3rem;
+  gap: 3rem;
+}
+
+.first-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
 }
