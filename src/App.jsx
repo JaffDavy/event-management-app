@@ -6,6 +6,10 @@ import Homepage from './Components/Home-page'; // Import the Homepage component
 import NavBar from './Components/Navbar'; // Import the NavBar component
 import Iconwrapper from './Components/Iconwrapper'; // Import the Iconwrapper component
 import './App.css';
+import './App.css'
+import NavBar from './Components/Navbar'
+import Iconwrapper from './Components/Iconwrapper'
+import Trend from './Components/Toptrendberlin'
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
