@@ -3,6 +3,14 @@ import EventForm from './EventForm';
 import { Login } from './Login';
 import { Register } from './Register';
 import './App.css'; // Import your CSS file here
+import React, { useState } from "react";
+// import logo from './logo.svg';
+import { Login } from "./Login";
+import { Register } from "./Register";
+import './App.css'
+import NavBar from './Components/Navbar'
+import Iconwrapper from './Components/Iconwrapper'
+import Trend from './Components/Toptrendberlin'
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -26,6 +34,8 @@ function App() {
           <button><a href='https://www.eventbrite.com/b/local/home-and-lifestyle/dating/' className="button-link">Find your next date</a></button>
         </div>
         {/* Include your Iconwrapper component here */}
+        <Iconwrapper />
+        <Trend />
       </body>
     </div>
   );
