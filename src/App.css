@@ -1,3 +1,14 @@
+#root {
+  max-width: 1280px;
+  text-align: center;
+  --primarycolor: #6495ed;
+  --secondrycolor: #F2F2F2;
+  --primarybgcolor: #000;
+  --secondarybgcolor: #F8F7FA;
+  --teciarybgcolor: #D1410C;
+  font-size: 0.7rem;
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -9,7 +20,9 @@
   background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
 }
 
-.container, .login-form, .register-form {
+.container,
+.login-form,
+.register-form {
   display: flex;
   flex-direction: column;
 }
@@ -48,17 +61,8 @@ button {
   background: none;
   color: white;
   text-decoration: underline;
-#root {
-  max-width: 1280px;
-  text-align: center;
-  --primarycolor: #6495ed;
-  --secondrycolor: #F2F2F2;
-  --primarybgcolor: #000;
-  --secondarybgcolor: #F8F7FA;
-  --teciarybgcolor: #D1410C;
-  font-size: 0.7rem;
 }
-
+   
 header {
   position: absolute;
   background-color: var(--secondarybgcolor);
