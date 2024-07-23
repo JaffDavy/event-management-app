@@ -2,30 +2,37 @@ import React, { useState } from "react";
 
 export const Login = (props) => {
     const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        
+        if (!email || !password) {
+            console.error('Email and password are required');
+            return;
+        }
+
         try {
+            console.log('Sending request with:', { email, password });
+
             const response = await fetch('http://localhost:5000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password: pass }),
+                body: JSON.stringify({ email, password }),
             });
 
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login successful:', data);
-               
             } else {
-                console.error('Login failed');
-               
+                const errorData = await response.json();
+                console.error('Login failed:', response.status, response.statusText, errorData);
             }
         } catch (error) {
             console.error('Error:', error);
-            
         }
     };
 
@@ -44,8 +51,8 @@ export const Login = (props) => {
                 />
                 <label htmlFor="password">Password</label>
                 <input
-                    value={pass}
-                    onChange={(e) => setPass(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="********"
                     id="password"
