@@ -2,6 +2,9 @@ import './App.css'
 import NavBar from './Components/Navbar'
 import Iconwrapper from './Components/Iconwrapper'
 import Trend from './Components/Toptrendberlin'
+import Moreevents from './Components/moreevents'
+import Popular from './Components/popularcitys'
+import About from './Components/About'
 
 function App() {
 
@@ -16,6 +19,9 @@ function App() {
         </div>
         <Iconwrapper />
         <Trend />
+        <Moreevents />
+        <Popular />
+        <About />
       </body>
     </>
   )
