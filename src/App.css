@@ -70,7 +70,7 @@ button {
 }
 
 header {
-  position: fixed;
+  position: absolute;
   background-color: var(--secondarybgcolor);
   color: var(--primarybgcolor);
   width: 100%;
