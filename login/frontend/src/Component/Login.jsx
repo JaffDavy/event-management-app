@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../App.css'
 
 export const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -7,7 +8,6 @@ export const Login = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        
         if (!email || !password) {
             console.error('Email and password are required');
             return;
@@ -24,6 +24,9 @@ export const Login = (props) => {
                 body: JSON.stringify({ email, password }),
             });
 
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login successful:', data);
@@ -32,7 +35,7 @@ export const Login = (props) => {
                 console.error('Login failed:', response.status, response.statusText, errorData);
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error.message);
         }
     };
 
