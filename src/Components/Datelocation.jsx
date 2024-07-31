@@ -1,50 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Datelocation = () => {
-    let map;
-    let geocoder;
+    const [map, setMap] = useState(null);
+    const [geocoder, setGeocoder] = useState(null);
 
     useEffect(() => {
-        // Load Google Maps script
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
-        script.async = true;
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDO1q_a9_xikW_XTx6iQhE_NeYOXqyLWWY&callback=initMap";
         document.head.appendChild(script);
 
-        // Define the initMap function in the window scope
+        script.onerror = () => {
+            console.error("Failed to load the Google Maps API script.");
+        };
+
         window.initMap = () => {
-            map = new google.maps.Map(document.getElementById("map"), {
+            const mapInstance = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: -34.397, lng: 150.644 },
                 zoom: 8,
             });
-            geocoder = new google.maps.Geocoder();
-
-            document.getElementById("event-location").addEventListener("input", function () {
-                let address = this.value;
-                geocodeAddress(address);
-            });
+            const geocoderInstance = new google.maps.Geocoder();
+            setMap(mapInstance);
+            setGeocoder(geocoderInstance);
         };
 
-        // Cleanup script and event listener on component unmount
+        script.onload = () => {
+            window.initMap();
+        };
+
         return () => {
             document.head.removeChild(script);
-            document.getElementById("event-location").removeEventListener("input", geocodeAddress);
         };
     }, []);
 
-    const geocodeAddress = (address) => {
-        geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status === 'OK') {
-                map.setCenter(results[0].geometry.location);
-                new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location
-                });
-            } else {
-                console.error('Geocode was not successful for the following reason: ' + status);
-            }
-        });
+    const handleInput = (event) => {
+        let address = event.target.value;
+        geocodeAddress(address);
     };
+
+    const geocodeAddress = (address) => {
+        if (geocoder && map) {
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    console.error('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        } else {
+            console.error('Geocoder or map is not initialized.');
+        }
+    };
+
+    useEffect(() => {
+        const inputElement = document.getElementById("event-location");
+        if (inputElement) {
+            inputElement.addEventListener("input", handleInput);
+        }
+
+        return () => {
+            if (inputElement) {
+                inputElement.removeEventListener("input", handleInput);
+            }
+        };
+    }, [map, geocoder]);
 
     return (
         <>
@@ -60,8 +82,9 @@ const Datelocation = () => {
                     <button type="submit">Submit</button>
                 </form>
             </div>
+            <button id='but'>Done</button>
         </>
     );
-}
+};
 
 export default Datelocation;
