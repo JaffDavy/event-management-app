@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 // Routes
 app.use('/auth', indexRouter);
-app.use('/events', eventRouter);
+app.use('/event', eventRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
