@@ -1,10 +1,17 @@
 import './App.css'
+// import EventForm from './Components/EventForm'
+// import Eventpage from './Components/Eventpage'
+// import Header from './Components/header'
+import Dashboard from './Components/dashboard'
 
 function App() {
 
   return (
     <>
-      <h1>Event Management System</h1>
+      {/* <Header /> */}
+      {/* <Eventpage />  */}
+      {/* < EventForm  /> */}
+      <Dashboard />
     </>
   )
 }
