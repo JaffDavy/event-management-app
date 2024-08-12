@@ -13,11 +13,12 @@ export default function Authen() {
   return (
     <>
       <div className="App">
-      {
-        currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
-      }
-    </div>
+        {
+          currentForm === "login" ? 
+            <Login onFormSwitch={toggleForm} /> : 
+            <Register onFormSwitch={toggleForm} />
+        }
+      </div>
     </>
   );
 }
-
