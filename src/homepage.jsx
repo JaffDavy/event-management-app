@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import EventForm from './EventForm'; // Make sure this component is defined
-import Login from './Login'; // Import the Login component
-import Register from './Register'; // Import the Register component
-import Homepage from './Components/Home-page'; // Import the Homepage component
-import NavBar from './Components/Navbar'; // Import the NavBar component
-import Iconwrapper from './Components/Iconwrapper'; // Import the Iconwrapper component
-import './App.css';
-import './App.css'
-import NavBar from './Components/Navbar'
+import EventForm from './EventForm';
+import Login from './Login';
+import Register from './Register';
+import NavBar from './Components/Navbar';
+import Iconwrapper from './Components/Iconwrapper';
+import '/home/davy-arnold/kyrios-projects/project-face/event-management-app/src/App.css'
+import NavBar from './Components/Navbar';
 import Iconwrapper from './Components/Iconwrapper'
 import Trend from './Components/Toptrendberlin'
 import Moreevents from './Components/moreevents'
 import Popular from './Components/popularcitys'
 import About from './Components/About'
 
-function App() {
+function Homepage() {
   const [currentForm, setCurrentForm] = useState('login');
 
   const toggleForm = (formName) => {
@@ -29,7 +27,7 @@ function App() {
         {currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />}
       </div>
       <header>
-        <NavBar /> {/* Include your NavBar component here */}
+        <NavBar />
       </header>
       <body>
         <div className="fineyourmatch">
@@ -39,7 +37,7 @@ function App() {
             </a>
           </button>
         </div>
-        <Iconwrapper /> {/* Include your Iconwrapper component here */}
+        <Iconwrapper />
         <Iconwrapper />
         <Trend />
         <Moreevents />
@@ -50,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+export default Homepage

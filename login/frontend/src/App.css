@@ -153,12 +153,12 @@ p {
 
 #but button {
   margin-top: 3rem;
-  color: var(--primarybgcolor);
+  color: var(--secondarybgcolor);
   border-radius: 5px;
 }
 
 .footer {
-  background-color: #1E0A3C;
+  background-color: #210b42;
   color: var(--secondarybgcolor);
   list-style: none;
   font-size: 0.7rem;
