@@ -21,7 +21,7 @@ router.post("/register", registrationValidation, async (req, res, next) => {
   }
 
   try {
-    const userCheckQuery = "SELECT * FROM users WHERE email = $1";
+    const userCheckQuery = "SELECT * FROM registration WHERE email = $1";
     const existingUsers = await pool.query(userCheckQuery, [email]);
 
     if (existingUsers.rows.length > 0) {
@@ -30,7 +30,7 @@ router.post("/register", registrationValidation, async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      "INSERT INTO users (full_name, password, email) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO registration (fullname, password, email) VALUES ($1, $2, $3) RETURNING *",
       [full_name, hashedPassword, email]
     );
     res.status(201).json(result.rows[0]);
@@ -44,7 +44,7 @@ router.post("/login", loginValidation, async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const result = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
+      "SELECT * FROM registration WHERE email = $1",
       [email]
     );
     const user = result.rows[0];
