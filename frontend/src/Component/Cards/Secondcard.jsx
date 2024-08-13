@@ -15,8 +15,6 @@ function Card2() {
 
                     From $22.42
 
-                    5F CHURCH
-
                     651 followers
                 </Card.Text>
             </Card.Body>

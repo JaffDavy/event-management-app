@@ -7,7 +7,7 @@ function More6() {
                 <Card.Img variant="top" src="src/assets/sx.jpg" />
             </a>
             <Card.Body>
-                <Card.Title>Irgendwann - Neue Deutsche Welle Liveparty</Card.Title>
+                <Card.Title>Neue Deutsche Welle Liveparty</Card.Title>
                 <Card.Text>
                     Sat, Jul 27 • 8:00 PM
 
@@ -15,9 +15,7 @@ function More6() {
 
                     From €0.00
 
-                    Kulturhaus Spandau
-
-                    2k followers
+                    Kulturhaus Spandau 
                 </Card.Text>
             </Card.Body>
         </Card>

@@ -7,13 +7,11 @@ function Card8() {
                 <Card.Img variant="top" src="src/assets/eight.jpg" />
             </a>
             <Card.Body>
-                <Card.Title>TLoophole Forever! Soli party at Fitzroy and Lark feat...|</Card.Title>
+                <Card.Title>TLoophole Forever! Soli party at Fitzroy and Lark feat</Card.Title>
                 <Card.Text>
                     Fri, Jul 26 • 7:00 PM
 
                     LARK
-
-                    From €21.31
 
                     Loophole Berlin
 

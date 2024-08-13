@@ -7,7 +7,7 @@ function Cards() {
                 <Card.Img variant="top" src="src/assets/first.jpg" />
             </a>
             <Card.Body>
-                <Card.Title>The best poetry slam in the world (2024) ☀ Open air on the beach ☀</Card.Title>
+                <Card.Title>The best poetry slam in the world (2024)</Card.Title>
                 <Card.Text>
                     Saturday • 7:00 PM
 

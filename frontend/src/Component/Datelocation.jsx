@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom'; 
 const Datelocation = () => {
     const [map, setMap] = useState(null);
     const [geocoder, setGeocoder] = useState(null);
+    const [title, setTitle] = useState(''); 
+    const [summary, setSummary] = useState('');
+    const [date, setDate] = useState('');
+    const [location, setLocation] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -33,7 +38,8 @@ const Datelocation = () => {
     }, []);
 
     const handleInput = (event) => {
-        let address = event.target.value;
+        const address = event.target.value;
+        setLocation(address);
         geocodeAddress(address);
     };
 
@@ -55,34 +61,89 @@ const Datelocation = () => {
         }
     };
 
-    useEffect(() => {
-        const inputElement = document.getElementById("event-location");
-        if (inputElement) {
-            inputElement.addEventListener("input", handleInput);
-        }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-        return () => {
-            if (inputElement) {
-                inputElement.removeEventListener("input", handleInput);
-            }
+        const eventData = {
+            title,   // mapping to EventTitle
+            summary, // mapping to EventSummary
+            date,    // mapping to EventDate
+            location // mapping to EventLocation
         };
-    }, [map, geocoder]);
+
+        try {
+            const response = await fetch('http://localhost:5000/event/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)
+            });
+
+            if (response.ok) {
+                console.log('Event submitted successfully');
+                navigate('/create-event'); // Navigate to the events page
+            } else {
+                console.error('Failed to submit event');
+            }
+        } catch (error) {
+            console.error('Error submitting event:', error);
+        }
+    };
 
     return (
         <>
             <div className="card">
-                <h2>Event Overview</h2>
-                <h4>Event title</h4>
-                <form id="event-form">
+                <form onSubmit={handleSubmit}>
+                    <h4>Event Title</h4>
+                    <label htmlFor="event-title">
+                        Be clear and descriptive with a title that tells people what your event is about.
+                    </label>
+                    <input
+                        type="text"
+                        id="event-title"
+                        name="event-title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                    />
+
+                    <h4>Event Summary</h4>
+                    <label htmlFor="event-summary">
+                        Grab people's attention with a short description about your event. Attendees will see this at the top of your event page.
+                    </label>
+                    <textarea
+                        id="event-summary"
+                        name="event-summary"
+                        rows="4"
+                        value={summary}
+                        onChange={(e) => setSummary(e.target.value)}
+                        required
+                    ></textarea>
+
                     <label htmlFor="event-date">Event Date:</label>
-                    <input type="date" id="event-date" name="event-date" required />
+                    <input
+                        type="date"
+                        id="event-date"
+                        name="event-date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                    />
+
                     <label htmlFor="event-location">Event Location:</label>
-                    <input type="text" id="event-location" name="event-location" required />
+                    <input
+                        type="text"
+                        id="event-location"
+                        name="event-location"
+                        value={location}
+                        onChange={handleInput}
+                        required
+                    />
                     <div id="map" style={{ height: '400px', width: '100%' }}></div>
                     <button type="submit">Submit</button>
                 </form>
             </div>
-            <button id='but'>Done</button>
         </>
     );
 };

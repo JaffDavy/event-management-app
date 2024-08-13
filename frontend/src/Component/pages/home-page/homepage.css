@@ -77,7 +77,7 @@ p {
 }
 
 .fineyourmatch {
-  background-image: url(./assets/date-2276564_1280.jpg);
+  background-image: url(../../../assets/date-2276564_1280.jpg);
   background-size: cover;
   background-position: center;
   height: 70vh;
@@ -151,10 +151,9 @@ p {
   border-radius: 5px;
 }
 
-#but {
+#but button {
   margin-top: 3rem;
-  color: var(--secondrycolor);
-  background-color: var(--primarycolor);
+  color: var(--secondarybgcolor);
   border-radius: 5px;
 }
 

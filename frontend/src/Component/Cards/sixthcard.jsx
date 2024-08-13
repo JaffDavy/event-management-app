@@ -13,8 +13,6 @@ function Card6() {
 
                     Freilichtbühne an der Zitadelle
 
-                    From €0.00
-
                     Kulturhaus Spandau
 
                     2k followers

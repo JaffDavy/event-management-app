@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import '../App.css';
+import '../../../App.css';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "./authenContext";
+import { AuthContext } from "../../authenContext";
 
 export const Register = (props) => {
     const navigate = useNavigate();

@@ -7,7 +7,7 @@ function More8() {
                 <Card.Img variant="top" src="src/assets/eght.jpg" />
             </a>
             <Card.Body>
-                <Card.Title>IWB F*cked Up Stories Night & Meet-Up at Grammarly</Card.Title>
+                <Card.Title>IWB F*cked Up Stories Night</Card.Title>
                 <Card.Text>
                     Thu, Jul 25 • 6:00 PM
 
@@ -16,8 +16,6 @@ function More8() {
                     From €17.17
 
                     International Women in Berlin
-
-                    479 followers
                 </Card.Text>
             </Card.Body>
         </Card>

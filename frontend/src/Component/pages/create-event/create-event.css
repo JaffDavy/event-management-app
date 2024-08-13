@@ -119,15 +119,10 @@ body {
 
 #but {
     margin-bottom: 3rem;
-    background-color: #007BFF;
     color: white;
     padding: 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
-}
-
-#but:hover {
-    background-color: #007BFF;
 }
 
 .icon-button {

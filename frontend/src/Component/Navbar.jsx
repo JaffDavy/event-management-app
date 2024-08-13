@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './authenContext'; // Adjust path as necessary
+import { AuthContext } from './authenContext';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -30,8 +30,8 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link href="https://www.eventbrite.com/d">Fine Events</Nav.Link>
-            <Nav.Link 
-              href="#link"
+            <Nav.Link
+              href=""
               className={isAuthenticated ? '' : 'disabled'}
               onClick={() => isAuthenticated ? navigate('/create-event') : null}
             >

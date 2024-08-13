@@ -1,13 +1,18 @@
-import Tittesummary from "./titlesummary";
 import Datelocation from "./Datelocation";
+import { useNavigate } from 'react-router-dom';
+
 
 const EventForm = () => {
 
+  const navigate = useNavigate();
+
+  const handleCreateEventClick = () => {
+    navigate('/event-page');
+  };
   return (
     <>
-      <button>back to events</button>
+      <button onClick={handleCreateEventClick}>back to events</button>
       <div className='event'>
-        <Tittesummary />
         <Datelocation />
       </div >
     </>
