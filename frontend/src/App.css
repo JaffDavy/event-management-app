@@ -133,6 +133,7 @@ p {
 
 .cards {
   display: flex;
+  justify-content: center;
   margin-left: 9rem;
   margin-top: 3rem;
   gap: 3rem;
@@ -154,7 +155,6 @@ p {
 #but {
   margin-top: 3rem;
   color: var(--secondrycolor);
-  background-color: var(--primarycolor);
   border-radius: 5px;
 }
 
@@ -168,5 +168,16 @@ p {
 .use-1 {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center ;
+}
+
+#event-page-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+#for {
+  display: flex;
+  flex-direction: column;
+  gap: 15rem;
 }

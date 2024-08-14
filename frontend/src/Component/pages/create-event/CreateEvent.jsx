@@ -1,5 +1,5 @@
 import "./create-event.css";
-import Eventpage from '../../Eventpage'
+import Eventpage from '../event-page/Eventpage'
 import Header from '../../header'
 
 function CreateEvent() {

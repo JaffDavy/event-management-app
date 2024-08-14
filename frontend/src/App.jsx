@@ -6,7 +6,7 @@ import Homepage from "./Component/pages/home-page/Home-page";
 import { AuthProvider } from "./Component/authenContext";
 import CreateEvent from "./Component/pages/create-event/CreateEvent";
 import EventForm from "./Component/EventForm";
-import Eventpage from "./Component/Eventpage";
+import Eventpage from "./Component/pages/event-page/Eventpage";
 
 function App() {
   return (

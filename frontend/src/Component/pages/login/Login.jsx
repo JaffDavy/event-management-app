@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import '../../../App.css';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../authenContext"; // Import the AuthContext
+import { AuthContext } from "../../authenContext";
 
 export const Login = (props) => {
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext); // Use the login function from context
+    const { login } = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');

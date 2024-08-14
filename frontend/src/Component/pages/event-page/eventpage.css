@@ -1,0 +1,109 @@
+#event-pages {
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+  background-color: #f7f7f7;
+  color: #333;
+  width: 100vw;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#event-cards-container {
+  margin-top: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 5rem;
+  width: 100%;
+}
+
+.event-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 15rem;
+  text-align: left;
+}
+
+.event-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.event-date {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.event-description {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.event-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 10px;
+}
+
+.event-attendance {
+  font-weight: bold;
+}
+
+.event-status {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+.event-status.active {
+  background-color: #28a745;
+  color: white;
+}
+
+.event-status.inactive {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+#event-page-button {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  color: white;
+}
