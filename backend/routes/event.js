@@ -127,7 +127,7 @@ router.get('/event-invite/:id', async (req, res) => {
     }
 });
 
-// Mark attendance for an event
+// Attend event
 router.post('/events/:id/attend', async (req, res) => {
     try {
         const eventId = parseInt(req.params.id, 10);
@@ -137,7 +137,7 @@ router.post('/events/:id/attend', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE Events SET Attendance = Attendance + 1 WHERE EventID = $1 RETURNING *',
+            'UPDATE Events SET accept = accept + 1 WHERE EventID = $1 RETURNING *',
             [eventId]
         );
 
@@ -147,6 +147,7 @@ router.post('/events/:id/attend', async (req, res) => {
 
         res.json({ msg: 'Attendance marked', attendance: result.rows[0].attendance });
     } catch (error) {
+        console.error('Server error:', error);
         res.status(500).send('Server error');
     }
 });
@@ -174,5 +175,16 @@ router.post('/events/:id/decline', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+router.get('/events/accepted-events', async (req, res) => {
+    const userId = req.user.id;
+    try {
+      const events = await Event.find({ userId: userId, status: 'accepted' }); // Fetch accepted events
+      res.json(events);
+    } catch (error) {
+      console.error('Error fetching accepted events:', error);
+      res.status(500).send('Server error');
+    }
+  });
 
 export default router;

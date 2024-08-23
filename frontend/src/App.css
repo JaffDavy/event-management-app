@@ -181,3 +181,31 @@ p {
   flex-direction: column;
   gap: 15rem;
 }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.dashboard-container {
+  flex-shrink: 0;
+}
+
+.content-container {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+  overflow-y: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body, html {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  background-color: #fff;
+}

@@ -56,9 +56,6 @@ function Eventpage() {
 
   return (
     <div id="event-pages">
-      <header>
-        <h1>Upcoming Events</h1>
-      </header>
       <section id="event-cards-container">
         {events.length > 0 ? (
           events.map((event) => (
@@ -88,7 +85,7 @@ function Eventpage() {
                     copyToClipboard(event.eventid);
                   }}
                 >
-                  Copy Invite Link
+                 Link
                 </button>
               </div>
             </div>

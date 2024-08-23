@@ -1,145 +1,87 @@
-/* eventpage.css */
-
 #event-pages {
-  font-family: Arial, sans-serif;
-  padding: 1rem;
-  background-color: #f7f7f7;
-  color: #333;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  margin-left: 12rem;
+  height: 100%;
 }
 
 #event-cards-container {
-  margin-top: 5rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 3rem;
-  width: 95%;
+  gap: 1.25rem;
+  justify-content: space-around;
+  flex-grow: 1;
 }
 
 .event-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem; 
   padding: 1rem;
-  width: 15rem;
-  text-align: left;
-  height: 85vh;
+  width: 18.75rem;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
 }
 
 .event-title {
-  font-size: 1.5em;
-  margin-bottom: 10px;
+  font-size: 1.5rem;
+  margin-bottom: 0.625rem;
 }
 
-.event-date {
-  font-size: 0.9em;
-  color: #666;
-  margin-bottom: 10px;
-}
-
+.event-date,
+.event-location,
 .event-summary {
-  margin-bottom: 20px;
-  color: #555;
+  margin-bottom: 0.625rem;
+  font-size: 1rem;
 }
 
 .event-card-footer {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #e5e5e5;
-  padding-top: 10px;
+  margin-top: 0.625rem;
 }
 
-.event-attendance {
-  font-weight: bold;
-}
-
-.event-status {
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 0.8em;
-  text-transform: uppercase;
-}
-
-.event-status.active {
-  background-color: #28a745;
-  color: white;
-}
-
-.event-status.inactive {
-  background-color: #dc3545;
-  color: white;
-}
-
-.delete-button {
-  background-color: #dc3545;
-  color: white;
+.delete-button,
+.copy-link-button {
+  background-color: #e74c3c;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  color: white;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
   cursor: pointer;
+  font-size: 0.9rem;
   transition: background-color 0.3s;
 }
 
-.delete-button:hover {
-  background-color: #c82333;
+.delete-button:hover,
+.copy-link-button:hover {
+  background-color: #c0392b;
 }
 
 #event-page-button {
-  margin-top: 20px;
+  margin-top: 1.25rem;
   display: flex;
   justify-content: space-between;
 }
 
 .btn {
-  padding: 10px 20px;
-  font-size: 1em;
+  background-color: #3498db;
+  color: white;
+  padding: 0.625rem 1.25rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: #0056b3;
-  color: white;
-}
-
-.copy-link-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.copy-link-button:hover {
-  background-color: #45a049;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .event-card {
-    width: calc(100% - 40px); /* Full width on small screens */
-  }
+  background-color: #2980b9;
 }

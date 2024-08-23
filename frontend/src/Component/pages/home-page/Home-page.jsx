@@ -14,7 +14,7 @@ function Homepage() {
     <header>
       <NavBar />
     </header>
-    <body>
+    <div>
       <div className='fineyourmatch'>
         <button><a href='https://www.eventbrite.com/b/local/home-and-lifestyle/dating/' class="button-link">Fine your next date</a></button>
       </div>
@@ -23,7 +23,7 @@ function Homepage() {
       <Moreevents />
       <Popular />
       <About />
-    </body>
+    </div>
   </>
   )
 
