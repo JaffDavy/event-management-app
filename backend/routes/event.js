@@ -34,14 +34,35 @@ router.get('/events', async (req, res, next) => {
     }
 });
 
+// Get event by ID
+router.get('/events/:id', async (req, res, next) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+
+        if (isNaN(eventId)) {
+            return res.status(404).send('Event not found');
+        }
+
+        const result = await pool.query('SELECT * FROM Events WHERE EventID = $1', [eventId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Event not found');
+        }
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
+
 // Update an event
 router.put('/events/:id', async (req, res, next) => {
     try {
-        const eventId = parseInt(req.params.id);
+        const eventId = parseInt(req.params.id, 10);
         const { title, summary, date, location } = req.body;
 
         if (isNaN(eventId)) {
-            return res.status(404).json({ error: 'Event not found' });
+            return res.status(400).json({ error: 'Invalid event ID' });
         }
 
         const result = await pool.query(
@@ -62,10 +83,10 @@ router.put('/events/:id', async (req, res, next) => {
 // Delete an event
 router.delete('/events/:id', async (req, res, next) => {
     try {
-        const eventId = parseInt(req.params.id);
+        const eventId = parseInt(req.params.id, 10);
 
         if (isNaN(eventId)) {
-            return res.status(404).json({ error: 'Event not found' });
+            return res.status(400).json({ error: 'Invalid event ID' });
         }
 
         const result = await pool.query('DELETE FROM Events WHERE EventID = $1 RETURNING *', [eventId]);
@@ -74,9 +95,83 @@ router.delete('/events/:id', async (req, res, next) => {
             return res.status(404).json({ error: 'Event not found' });
         }
 
-        res.status(204).send();  // Sending a 204 No Content status on successful deletion
+        res.status(204).send();
     } catch (error) {
         next(error);
+    }
+});
+
+// Get event by ID for invite
+router.get('/event-invite/:id', async (req, res) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+
+        if (isNaN(eventId)) {
+            return res.status(404).send('Event not found');
+        }
+
+        const result = await pool.query('SELECT * FROM Events WHERE EventID = $1', [eventId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Event not found');
+        }
+
+        const event = result.rows[0];
+
+        res.json({
+            message: `You have been invited to ${event.EventTitle}!`,
+            eventDetails: event
+        });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
+
+// Mark attendance for an event
+router.post('/events/:id/attend', async (req, res) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+
+        if (isNaN(eventId)) {
+            return res.status(400).json({ error: 'Invalid event ID' });
+        }
+
+        const result = await pool.query(
+            'UPDATE Events SET Attendance = Attendance + 1 WHERE EventID = $1 RETURNING *',
+            [eventId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        res.json({ msg: 'Attendance marked', attendance: result.rows[0].attendance });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
+
+// Decline event attendance
+router.post('/events/:id/decline', async (req, res) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+
+        if (isNaN(eventId)) {
+            return res.status(400).json({ error: 'Invalid event ID' });
+        }
+
+        const result = await pool.query(
+            'UPDATE Events SET Declined = COALESCE(Declined, 0) + 1 WHERE EventID = $1 RETURNING *',
+            [eventId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        res.json({ msg: 'Attendance declined', declined: result.rows[0].declined });
+    } catch (error) {
+        res.status(500).send('Server error');
     }
 });
 

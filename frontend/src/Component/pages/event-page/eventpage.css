@@ -1,9 +1,10 @@
+/* eventpage.css */
+
 #event-pages {
   font-family: Arial, sans-serif;
   padding: 1rem;
   background-color: #f7f7f7;
   color: #333;
-  width: 100vw;
 }
 
 header {
@@ -15,18 +16,26 @@ header {
   margin-top: 5rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 5rem;
-  width: 100%;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 95%;
 }
 
 .event-card {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 1rem;
   width: 15rem;
   text-align: left;
+  height: 85vh;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .event-title {
@@ -40,13 +49,15 @@ header {
   margin-bottom: 10px;
 }
 
-.event-description {
+.event-summary {
   margin-bottom: 20px;
   color: #555;
 }
 
 .event-card-footer {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #e5e5e5;
@@ -106,4 +117,29 @@ header {
 .btn:hover {
   background-color: #0056b3;
   color: white;
+}
+
+.copy-link-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.copy-link-button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .event-card {
+    width: calc(100% - 40px); /* Full width on small screens */
+  }
 }
