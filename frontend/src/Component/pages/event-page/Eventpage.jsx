@@ -65,10 +65,10 @@ function Eventpage() {
               <p className="event-location">{event.eventlocation}</p>
               <p className="event-summary">{event.eventsummary.substring(0, 100)}...</p>
               <div className="event-card-footer">
-                <span className="event-attendance">Attendance: {event.attendance}</span>
-                <span className={`event-status ${event.status ? event.status.toLowerCase() : 'unknown'}`}>
-                  {event.status || 'Unknown'}
-                </span>
+                {/* <span className="event-attendance">Attendance: {event.attendance}</span> */}
+                {/* <span className={`event-status ${event.status ? event.status.toLowerCase() : 'unknown'}`}> */}
+                  {/* {event.status || 'Unknown'} */}
+                {/* </span> */}
                 <button
                   className="delete-button"
                   onClick={(e) => {

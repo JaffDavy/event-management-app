@@ -1,4 +1,4 @@
-import createError from 'http-errors';
+// import createError from 'http-errors';
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
@@ -23,8 +23,9 @@ app.use('/event', eventRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  res.status(404).send('Not Found');
 });
+
 
 // Error handler
 app.use((err, req, res, next) => {

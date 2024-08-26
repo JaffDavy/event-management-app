@@ -66,7 +66,7 @@ button {
 }
    
 header {
-  position: absolute;
+  position: absolutec;
   background-color: var(--secondarybgcolor);
   color: var(--primarybgcolor);
   width: 100%;

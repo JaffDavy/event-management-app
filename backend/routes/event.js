@@ -7,15 +7,15 @@ router.use(express.json());
 // Create an event
 router.post('/events', async (req, res, next) => {
     try {
-        const { title, summary, date, location } = req.body;
+        const { title, summary, date, location, status } = req.body;
 
         if (!title || !summary || !date || !location) {
             return res.status(400).json({ error: 'Event title, summary, date, and location are required' });
         }
 
         const result = await pool.query(
-            'INSERT INTO Events (EventTitle, EventSummary, EventDate, EventLocation) VALUES ($1, $2, $3, $4) RETURNING *',
-            [title, summary, date, location]
+            'INSERT INTO Events (EventTitle, EventSummary, EventDate, EventLocation, Status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [title, summary, date, location, status || 'pending'] // Default status to 'pending' if not provided
         );
 
         res.status(201).json(result.rows[0]);
@@ -23,6 +23,7 @@ router.post('/events', async (req, res, next) => {
         next(error);
     }
 });
+
 
 // Get all events
 router.get('/events', async (req, res, next) => {
@@ -177,14 +178,18 @@ router.post('/events/:id/decline', async (req, res) => {
 });
 
 router.get('/events/accepted-events', async (req, res) => {
-    const userId = req.user.id;
+    const userId = req.user.id; // Ensure req.user is correctly populated
     try {
-      const events = await Event.find({ userId: userId, status: 'accepted' }); // Fetch accepted events
-      res.json(events);
+        const result = await pool.query(
+            'SELECT * FROM Events WHERE UserID = $1 AND Status = $2', 
+            [userId, 'accepted']
+        );
+        res.json(result.rows);
     } catch (error) {
-      console.error('Error fetching accepted events:', error);
-      res.status(500).send('Server error');
+        console.error('Error fetching accepted events:', error);
+        res.status(500).send('Server error');
     }
-  });
+});
+
 
 export default router;
