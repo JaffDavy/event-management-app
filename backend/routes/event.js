@@ -175,4 +175,42 @@ router.post('/events/:id/decline', async (req, res) => {
     }
 });
 
+// Route to get all categories
+router.get('/categories', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM Categories');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error fetching categories:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Route to get events by category name
+router.get('/category/:categoryName', async (req, res, next) => {
+    try {
+        const { categoryName } = req.params;
+
+        const query = `
+            SELECT e.EventTitle, e.EventSummary,
+                   TO_CHAR(e.EventDate, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') AS EventDate,
+                   e.EventLocation
+            FROM Events e
+            JOIN Categories c ON e.category_id = c.id
+            WHERE c.name = $1
+        `;
+
+        const result = await pool.query(query, [categoryName]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'No events found for this category' });
+        }
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error in /category/:categoryName GET:', error.message);
+        next(error);
+    }
+});
+
 export default router;

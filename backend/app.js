@@ -7,7 +7,7 @@ import indexRouter from './routes/auth.js';
 import eventRouter from './routes/event.js';
 
 dotenv.config();
-const PORT = 5000;
+const PORT = 4000;
 
 const app = express();
 

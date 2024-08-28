@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,43 +6,56 @@ export default function CategoryEvents() {
   const { categoryName } = useParams(); 
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();  
 
   useEffect(() => {
     const fetchEventsByCategory = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const response = await axios.get(`http://localhost:5000/event/category/${categoryName}`);
         setEvents(response.data);
       } catch (error) {
-        setError('Error fetching events');
+        setError('There was a problem fetching the events. Please try again later.');
         console.error('Error fetching events:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchEventsByCategory();
-  }, [categoryName]); 
+  }, [categoryName]);
+
+  const handleCategoryClick = useCallback((category) => {
+    navigate(`/category/${category}`);
+  }, [navigate]);
+
+  if (loading) {
+    return <div>Loading events...</div>;
+  }
 
   if (error) {
     return <div>{error}</div>;
   }
 
-  const handleCategoryClick = (category) => {
-    navigate(`/category/${category}`); 
-  };
-
   return (
     <div className='eventList'>
       <h2>Events in {categoryName}</h2>
-      <button onClick={() => navigate('/')}>Back to Main Page</button> 
+      <button onClick={() => navigate('/')} aria-label="Back to Main Page">Back to Main Page</button> 
       {events.length > 0 ? (
-        events.map((event, index) => (
-          <div key={index} className="event-item">
+        events.map((event) => (
+          <div key={event.id} className="event-item">
             <h3>{event.EventTitle || 'No title provided'}</h3>
             <p>{event.EventSummary || 'No summary provided'}</p>
-            <p>Date: {event.EventDate ? new Date(event.EventDate).toLocaleDateString() : 'No date provided'}</p>
+            <p>Date: {event.EventDate ? new Date(event.EventDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'No date provided'}</p>
             <p>Location: {event.EventLocation || 'Location not provided'}</p>
            
-            <button onClick={() => handleCategoryClick(event.category_name)}>View Related Category</button>
+            {event.category_name && (
+              <button onClick={() => handleCategoryClick(event.category_name)} aria-label={`View related category for ${event.EventTitle}`}>
+                View Related Category
+              </button>
+            )}
           </div>
         ))
       ) : (
