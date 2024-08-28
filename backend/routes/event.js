@@ -18,15 +18,21 @@ const validateCategory = async (category_id) => {
 // Create an event
 router.post('/events', async (req, res, next) => {
     try {
-        const { title, summary, date, location } = req.body;
+        const { title, summary, date, location, category_id } = req.body;
 
-        if (!title || !summary || !date || !location) {
-            return res.status(400).json({ error: 'Event title, summary, date, and location are required' });
+        if (!title || !summary || !date || !location || !category_id) {
+            return res.status(400).json({ error: 'Event title, summary, date, location, and category_id are required' });
+        }
+
+        // Validate category before creating event
+        const categoryExists = await validateCategory(category_id);
+        if (!categoryExists) {
+            return res.status(400).json({ error: 'Invalid category_id' });
         }
 
         const result = await pool.query(
-            'INSERT INTO Events (EventTitle, EventSummary, EventDate, EventLocation) VALUES ($1, $2, $3, $4) RETURNING *',
-            [title, summary, date, location]
+            'INSERT INTO Events (EventTitle, EventSummary, EventDate, EventLocation, category_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [title, summary, date, location, category_id]
         );
 
         res.status(201).json(result.rows[0]);
@@ -70,15 +76,23 @@ router.get('/events/:id', async (req, res, next) => {
 router.put('/events/:id', async (req, res, next) => {
     try {
         const eventId = parseInt(req.params.id, 10);
-        const { title, summary, date, location } = req.body;
+        const { title, summary, date, location, category_id } = req.body;
 
         if (isNaN(eventId)) {
             return res.status(400).json({ error: 'Invalid event ID' });
         }
 
+        // Validate category if provided
+        if (category_id) {
+            const categoryExists = await validateCategory(category_id);
+            if (!categoryExists) {
+                return res.status(400).json({ error: 'Invalid category_id' });
+            }
+        }
+
         const result = await pool.query(
-            'UPDATE Events SET EventTitle = $1, EventSummary = $2, EventDate = $3, EventLocation = $4 WHERE EventID = $5 RETURNING *',
-            [title, summary, date, location, eventId]
+            'UPDATE Events SET EventTitle = $1, EventSummary = $2, EventDate = $3, EventLocation = $4, category_id = $5 WHERE EventID = $6 RETURNING *',
+            [title, summary, date, location, category_id, eventId]
         );
 
         if (result.rows.length === 0) {
@@ -148,7 +162,7 @@ router.post('/events/:id/attend', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE Events SET Attendance = Attendance + 1 WHERE EventID = $1 RETURNING *',
+            'UPDATE Events SET Attendance = COALESCE(Attendance, 0) + 1 WHERE EventID = $1 RETURNING *',
             [eventId]
         );
 
@@ -191,9 +205,11 @@ router.get('/category/:categoryName', async (req, res, next) => {
   try {
     const { categoryName } = req.params;
     
-    // Query to select events by category name
     const result = await pool.query(
-      `SELECT * FROM Events WHERE CategoryID = (SELECT id FROM Categories WHERE name = $1)`,
+      `SELECT e.*, c.name as category_name 
+       FROM Events e
+       JOIN Categories c ON e.category_id = c.id
+       WHERE c.name = $1`,
       [categoryName]
     );
     
