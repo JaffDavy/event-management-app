@@ -4,6 +4,17 @@ import pool from '../config/config.js';
 const router = express.Router();
 router.use(express.json());
 
+// Utility function to validate if a category exists
+const validateCategory = async (category_id) => {
+  try {
+    const category = await pool.query('SELECT id FROM Categories WHERE id = $1', [category_id]);
+    return category.rows.length > 0;
+  } catch (error) {
+    console.error('Error validating category:', error.message);
+    throw error;
+  }
+};
+
 // Create an event
 router.post('/events', async (req, res, next) => {
     try {
@@ -178,7 +189,7 @@ router.post('/events/:id/decline', async (req, res) => {
 // Route to get all categories
 router.get('/categories', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM Categories');
+        const  result = await pool.query('SELECT * FROM Categories');
         res.json(result.rows);
     } catch (error) {
         console.error('Error fetching categories:', error.message);
