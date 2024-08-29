@@ -7,7 +7,7 @@ import indexRouter from './routes/auth.js';
 import eventRouter from './routes/event.js';
 
 dotenv.config();
-const PORT = 4000;
+const PORT = 5000;
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.use('/event', eventRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  next(createError(404)); 
 });
 
 // Error handler
