@@ -8,6 +8,7 @@ const Datelocation = () => {
     const [summary, setSummary] = useState('');
     const [date, setDate] = useState('');
     const [location, setLocation] = useState('');
+    const [capacity, setCapacity] = useState('');  // State for capacity
     const [categories, setCategories] = useState([]); 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [error, setError] = useState(null); // State to hold error messages
@@ -88,7 +89,7 @@ const Datelocation = () => {
         event.preventDefault();
 
         // Validate required fields
-        if (!title || !summary || !date || !location || !selectedCategory) {
+        if (!title || !summary || !date || !location || !selectedCategory || !capacity) {
             setError('All fields are required');
             return;
         }
@@ -98,6 +99,7 @@ const Datelocation = () => {
             summary,
             date,
             location,
+            capacity,  // Include capacity in the submitted event data
             category_id: selectedCategory || null
         };
 
@@ -171,6 +173,17 @@ const Datelocation = () => {
                     value={location}
                     onChange={handleInput}
                     required
+                />
+
+                <label htmlFor="event-capacity">Event Capacity:</label>
+                <input
+                    type="number"
+                    id="event-capacity"
+                    name="event-capacity"
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
+                    required
+                    min="1" // Ensures capacity is at least 1
                 />
 
                 <label htmlFor="event-category">Event Category (Optional):</label>

@@ -13,6 +13,7 @@ import EventDetail from "./Component/pages/event-details/event-details";
 import EventDashboard from "./Component/pages/create-event/dashboard"; // Correct import
 import MyEvents from "./Component/pages/myevents/myevents";
 import IconWrapper from "./Component/Iconwrapper";
+import TicketsPage from "./Component/pages/tickets-page/tickets";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -35,6 +36,7 @@ const AppLayout = () => {
           <Route path="/my-events" element={<MyEvents />} />
           <Route path="/eventdashboard" element={<EventDashboard />} />
           <Route path="/iconwrapper" element={<IconWrapper />} />
+          <Route path="/tickets" element={<TicketsPage />} /> 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

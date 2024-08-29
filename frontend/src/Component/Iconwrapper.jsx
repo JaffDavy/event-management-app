@@ -49,7 +49,7 @@ function IconWrapper() {
           categories.map((category) => (
             <div key={category.id} className="icon-item">
               <button
-                onClick={() => navigate(`/category/${category.name}`)} // Use navigate onClick
+                onClick={() => navigate(`/category/${category.name}`)}
                 className="icon-button"
                 aria-label={`View events for ${category.name}`}
               >

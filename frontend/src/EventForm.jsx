@@ -10,8 +10,9 @@ const EventForm = () => {
         date: '',
         location: '',
         description: '',
-        category_id: '', // Include category_id
+        category_id: '',
     });
+    const [image, setImage] = useState(null); // State to hold the selected image file
     const [categories, setCategories] = useState([]);
     const [mapCenter, setMapCenter] = useState({ lat: 3.8667, lng: 11.5167 });
     const [markerPosition, setMarkerPosition] = useState({ lat: 3.8667, lng: 11.5167 });
@@ -45,6 +46,10 @@ const EventForm = () => {
         }
     };
 
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    };
+
     const fetchCoordinates = async (address) => {
         try {
             const response = await axios.get(
@@ -65,8 +70,20 @@ const EventForm = () => {
     const handleCreateEvent = async (e) => {
         e.preventDefault();
 
+        const formData = new FormData();
+        formData.append('title', eventData.title);
+        formData.append('date', eventData.date);
+        formData.append('location', eventData.location);
+        formData.append('description', eventData.description);
+        formData.append('category_id', eventData.category_id);
+        formData.append('image', image); // Append the image file
+
         try {
-            const response = await axios.post('http://localhost:5000/events/events', eventData);
+            const response = await axios.post('http://localhost:5000/events/events', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log('Event created:', response.data);
         } catch (error) {
             console.error('Failed to submit event:', error.response ? error.response.data : error.message);
@@ -115,6 +132,13 @@ const EventForm = () => {
                         </option>
                     ))}
                 </select>
+                <input 
+                    className='events'
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                />
                 <button type="submit">Create Event</button>
             </form>
             {locationEntered && (

@@ -14,7 +14,7 @@ export default function CategoryEvents() {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`http://localhost:5000/event/category/${categoryName}`);
+        const response = await axios.get(`http://localhost:5000/event/categories/${categoryName}`);
         setEvents(response.data);
       } catch (error) {
         setError('There was a problem fetching the events. Please try again later.');
