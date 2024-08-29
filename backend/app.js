@@ -3,7 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'; 
-import indexRouter from './routes/auth.js'; 
+import indexRouter from './routes/auth.js';
 import eventRouter from './routes/event.js';
 
 dotenv.config();
