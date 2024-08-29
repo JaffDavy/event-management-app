@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "npm install --legacy-peer-deps",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
