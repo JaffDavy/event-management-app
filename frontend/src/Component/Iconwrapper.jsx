@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function IconWrapper() {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -22,17 +24,17 @@ function IconWrapper() {
   const getIcon = (categoryName) => {
     switch (categoryName) {
       case 'Sports':
-        return '⚽'; 
+        return '⚽';
       case 'Social':
-        return '👥'; 
+        return '👥';
       case 'Education':
-        return '🎓'; 
+        return '🎓';
       case 'Entertainment':
-        return '🎭'; 
+        return '🎭';
       case 'Business':
-        return '💼'; 
+        return '💼';
       default:
-        return '📁'; 
+        return '📁';
     }
   };
 
@@ -46,9 +48,13 @@ function IconWrapper() {
         {categories.length > 0 ? (
           categories.map((category) => (
             <div key={category.id} className="icon-item">
-              <a href={`/category/${category.name}`} className="icon-button">
+              <button
+                onClick={() => navigate(`/category/${category.name}`)} // Use navigate onClick
+                className="icon-button"
+                aria-label={`View events for ${category.name}`}
+              >
                 <span className="category-icon">{getIcon(category.name)}</span>
-              </a>
+              </button>
               <p>{category.name}</p>
             </div>
           ))

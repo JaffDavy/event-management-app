@@ -1,0 +1,53 @@
+.my-events-page {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.my-events-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.event-item {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.event-item h3 {
+    margin-top: 0;
+}
+
+.event-actions {
+    margin-top: 10px;
+}
+
+.event-actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.event-actions button:hover {
+    background-color: #0056b3;
+}
+
+.event-actions button:last-child {
+    background-color: #dc3545;
+}
+
+.event-actions button:last-child:hover {
+    background-color: #c82333;
+}
