@@ -29,14 +29,7 @@
   flex-direction: column;
 }
 
-@media screen and (min-width: 600px) {
-  .container {
-    /* padding: 5rem; */
-    border: 1px solid white;
-    border-radius: 10px;
-    margin: 0.5rem;
-  }
-}
+
 
 label {
   text-align: left;
@@ -239,4 +232,62 @@ p {
   color: red;
   text-align: center;
   padding: 20px;
+}
+
+/* Event Registration Form Styles */
+
+.registration-container {
+  max-width: 28rem;
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.form-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.form-button:hover {
+  background-color: #2563eb;
+}
+
+.form-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.alert {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.alert-description {
+  font-size: 0.875rem;
 }

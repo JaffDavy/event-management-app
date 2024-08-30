@@ -6,10 +6,11 @@ const Datelocation = () => {
     const [geocoder, setGeocoder] = useState(null);
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
-    const [date, setDate] = useState('');
     const [location, setLocation] = useState('');
-    const [categories, setCategories] = useState([]); 
+    const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [error, setError] = useState(null); // State to hold error messages
     const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const Datelocation = () => {
         // Fetch categories
         const fetchCategories = async () => {
             try {
-                const response = await fetch('http://localhost:5000/event/categories'); 
+                const response = await fetch('http://localhost:5000/event/categories');
                 if (response.ok) {
                     const data = await response.json();
                     setCategories(data);
@@ -88,7 +89,7 @@ const Datelocation = () => {
         event.preventDefault();
 
         // Validate required fields
-        if (!title || !summary || !date || !location || !selectedCategory) {
+        if (!title || !summary || !location || !selectedCategory || !startDate || !endDate) {
             setError('All fields are required');
             return;
         }
@@ -96,8 +97,9 @@ const Datelocation = () => {
         const eventData = {
             title,
             summary,
-            date,
             location,
+            start_date: startDate,
+            end_date: endDate,
             category_id: selectedCategory || null
         };
 
@@ -153,16 +155,6 @@ const Datelocation = () => {
                     required
                 ></textarea>
 
-                <label htmlFor="event-date">Event Date:</label>
-                <input
-                    type="date"
-                    id="event-date"
-                    name="event-date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    required
-                />
-
                 <label htmlFor="event-location">Event Location:</label>
                 <input
                     type="text"
@@ -170,6 +162,26 @@ const Datelocation = () => {
                     name="event-location"
                     value={location}
                     onChange={handleInput}
+                    required
+                />
+
+                <label htmlFor="event-start-date">Event Start Date:</label>
+                <input
+                    type="date"
+                    id="event-start-date"
+                    name="event-start-date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    required
+                />
+
+                <label htmlFor="event-end-date">Event End Date:</label>
+                <input
+                    type="date"
+                    id="event-end-date"
+                    name="event-end-date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
                     required
                 />
 
