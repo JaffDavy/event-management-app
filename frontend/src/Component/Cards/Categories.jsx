@@ -37,10 +37,10 @@ export default function CategoryEvents() {
       {events.length > 0 ? (
         events.map((event, index) => (
           <div key={index} className="event-item">
-            <h3>{event.EventTitle || 'No title provided'}</h3>
-            <p>{event.EventSummary || 'No summary provided'}</p>
-            <p>Date: {event.EventDate ? new Date(event.EventDate).toLocaleDateString() : 'No date provided'}</p>
-            <p>Location: {event.EventLocation || 'Location not provided'}</p>
+            <h3>{event.eventtitle || 'No title provided'}</h3>
+            <p>{event.eventsummary || 'No summary provided'}</p>
+            <p>Date: {event.eventdate ? new Date(event.eventdate).toLocaleDateString() : 'No date provided'}</p>
+            <p>Location: {event.eventlocation || 'Location not provided'}</p>
            
             <button onClick={() => handleCategoryClick(event.category_name)}>View Related Category</button>
           </div>
