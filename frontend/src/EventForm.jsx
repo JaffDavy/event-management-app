@@ -119,6 +119,17 @@ const EventForm = () => {
                     value={eventData.description}
                     onChange={handleInputChange}
                 />
+                
+<label htmlFor="capacity">Event Capacity:</label>
+<input
+    type="number"
+    id="capacity"
+    name="capacity"
+    value={capacity}
+    onChange={(e) => setCapacity(e.target.value)}
+    required
+/>
+
                 <select 
                     className='events'
                     name="category_id"

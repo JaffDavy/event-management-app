@@ -9,6 +9,7 @@ import EventForm from "./Component/EventForm";
 import Eventpage from "./Component/pages/event-page/Eventpage";
 import CategoryEvents from './Component/Cards/Categories';
 import EventInvitePage from "./Component/pages/event-invite/event-invite";
+<<<<<<< HEAD
 import EventDetail from "./Component/pages/event-details/event-details";
 import EventDashboard from "./Component/pages/create-event/dashboard"; // Correct import
 import MyEvents from "./Component/pages/myevents/myevents";
@@ -19,6 +20,12 @@ const AppLayout = () => {
   const location = useLocation();
 
   const showDashboard = ["/create-event", "/event-page", "/event-form"];
+=======
+import EventDetail from "./Component/pages/event-details/event-details";    
+import EventRegistration from './Component/EventRegistration';     
+import ViewRegistrations from './Component/ViewRegistrations';     
+import CancelRegistration from './Component/CancelRegistration';
+>>>>>>> 8320860 (added dashboard)
 
   return (
     <div className="app-container">
@@ -29,6 +36,14 @@ const AppLayout = () => {
           <Route path="/authen" element={<Authen />} />
           <Route path="/categories" element={<CategoryEvents />} />
           <Route path="/create-event" element={<CreateEvent />} />
+<<<<<<< HEAD
+=======
+          <Route path="/event-page" element={<Eventpage />} />
+          <Route path="/event/:id" element={<EventDetail />} />
+          <Route path="/register-event" element={<EventRegistration />} />
+          <Route path="/cancel-registration" element={<CancelRegistration />} />
+          <Route path="/view-registrations" element={<ViewRegistrations />} />
+>>>>>>> 8320860 (added dashboard)
           <Route path="/event-invite" element={<EventInvitePage />} />
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/event-page" element={<Eventpage />} />
