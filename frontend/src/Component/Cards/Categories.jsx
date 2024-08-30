@@ -28,7 +28,7 @@ export default function CategoryEvents() {
   }, [categoryName]);
 
   const handleCategoryClick = useCallback((category) => {
-    navigate(`/category/${category}`);
+    navigate(`/categories/${category}`);
   }, [navigate]);
 
   if (loading) {
