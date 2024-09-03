@@ -10,7 +10,8 @@ const EventForm = () => {
         date: '',
         location: '',
         description: '',
-        category_id: '', 
+        category_id: '',
+        capacity: '' // Add capacity to the eventData state
     });
     const [categories, setCategories] = useState([]);
     const [mapCenter, setMapCenter] = useState({ lat: 3.8667, lng: 11.5167 });
@@ -103,15 +104,15 @@ const EventForm = () => {
                     onChange={handleInputChange}
                 />
                 
-<label htmlFor="capacity">Event Capacity:</label>
-<input
-    type="number"
-    id="capacity"
-    name="capacity"
-    value={capacity}
-    onChange={(e) => setCapacity(e.target.value)}
-    required
-/>
+                <label htmlFor="capacity">Event Capacity:</label>
+                <input
+                    type="number"
+                    id="capacity"
+                    name="capacity"
+                    value={eventData.capacity}
+                    onChange={handleInputChange}
+                    required
+                />
 
                 <select 
                     className='events'
