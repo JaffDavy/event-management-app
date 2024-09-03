@@ -28,7 +28,7 @@ const EventRegistration = () => {
         // Fetch user registrations
         const fetchUserRegistrations = async () => {
             try {
-                const userId = 1; // Replace with actual user ID, e.g., from authentication context
+                const userId = 1; 
                 const response = await fetch(`http://localhost:5000/users/${userId}/registrations`);
                 if (response.ok) {
                     const data = await response.json();
