@@ -11,7 +11,8 @@ const Datelocation = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [error, setError] = useState(null); // State to hold error messages
+    const [capacity, setCapacity] = useState('');
+    const [error, setError] = useState(null); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -89,19 +90,30 @@ const Datelocation = () => {
         event.preventDefault();
 
         // Validate required fields
-        if (!title || !summary || !location || !selectedCategory || !startDate || !endDate) {
+        if (!title || !summary || !location || !selectedCategory || !startDate || !endDate || !capacity) {
             setError('All fields are required');
+            return;
+        }
+
+        // Ensure capacity is a number
+        const capacityNumber = Number(capacity);
+        if (isNaN(capacityNumber) || capacityNumber <= 0) {
+            setError('Capacity must be a positive number');
             return;
         }
 
         const eventData = {
             title,
             summary,
-            location,
             start_date: startDate,
             end_date: endDate,
-            category_id: selectedCategory || null
+            location,
+            category_id: selectedCategory || null,
+            capacity: capacityNumber
         };
+
+        // Log the event data
+        console.log('Event Data:', eventData);
 
         try {
             const response = await fetch('http://localhost:5000/event/events', {
@@ -182,6 +194,16 @@ const Datelocation = () => {
                     name="event-end-date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
+                    required
+                />
+
+                <label htmlFor='event-capacity'>Capacity:</label>
+                <input
+                    type='number'
+                    id='event-capacity'
+                    name='event-capacity'
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
                     required
                 />
 

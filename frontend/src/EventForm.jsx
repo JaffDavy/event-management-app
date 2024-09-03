@@ -10,7 +10,7 @@ const EventForm = () => {
         date: '',
         location: '',
         description: '',
-        category_id: '', // Include category_id
+        category_id: '', 
     });
     const [categories, setCategories] = useState([]);
     const [mapCenter, setMapCenter] = useState({ lat: 3.8667, lng: 11.5167 });
