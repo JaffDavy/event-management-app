@@ -7,17 +7,12 @@ const Datelocation = () => {
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [location, setLocation] = useState('');
-<<<<<<< HEAD
     const [capacity, setCapacity] = useState('');  // State for capacity
     const [categories, setCategories] = useState([]); 
-=======
-    const [categories, setCategories] = useState([]);
->>>>>>> 8320860 (added dashboard)
     const [selectedCategory, setSelectedCategory] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [capacity, setCapacity] = useState('');
-    const [error, setError] = useState(null); 
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -94,13 +89,11 @@ const Datelocation = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Validate required fields
         if (!title || !summary || !location || !selectedCategory || !startDate || !endDate || !capacity) {
             setError('All fields are required');
             return;
         }
 
-        // Ensure capacity is a number
         const capacityNumber = Number(capacity);
         if (isNaN(capacityNumber) || capacityNumber <= 0) {
             setError('Capacity must be a positive number');
@@ -108,17 +101,14 @@ const Datelocation = () => {
         }
 
         const eventData = {
-            title,
-            summary,
+            eventtitle: title,
+            eventsummary: summary,
             start_date: startDate,
             end_date: endDate,
-            location,
+            eventlocation: location,
             category_id: selectedCategory || null,
             capacity: capacityNumber
         };
-
-        // Log the event data
-        console.log('Event Data:', eventData);
 
         try {
             const response = await fetch('http://localhost:5000/event/events', {
@@ -131,7 +121,7 @@ const Datelocation = () => {
 
             if (response.ok) {
                 console.log('Event submitted successfully');
-                navigate('/create-event');
+                navigate('/');  // Navigate to the main page to see the new event
             } else {
                 const errorData = await response.json();
                 setError(`Failed to submit event: ${errorData.error}`);
@@ -219,18 +209,19 @@ const Datelocation = () => {
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                 >
-                    <option value="">Select Category</option>
-                    {categories.map(category => (
+                    <option value="">Select a Category</option>
+                    {categories.map((category) => (
                         <option key={category.id} value={category.id}>
                             {category.name}
                         </option>
                     ))}
                 </select>
 
-                <div id="map" style={{ height: '400px', width: '100%' }}></div>
                 <button type="submit">Submit</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
-            {error && <div className="error">{error}</div>}
+
+            <div id="map" style={{ height: '400px', width: '100%' }}></div>
         </div>
     );
 };

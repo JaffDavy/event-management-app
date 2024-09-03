@@ -11,6 +11,7 @@ const EventForm = () => {
         location: '',
         description: '',
         category_id: '',
+        capacity: '' // Add capacity to the eventData state
     });
     const [image, setImage] = useState(null); // State to hold the selected image file
     const [categories, setCategories] = useState([]);
@@ -120,15 +121,15 @@ const EventForm = () => {
                     onChange={handleInputChange}
                 />
                 
-<label htmlFor="capacity">Event Capacity:</label>
-<input
-    type="number"
-    id="capacity"
-    name="capacity"
-    value={capacity}
-    onChange={(e) => setCapacity(e.target.value)}
-    required
-/>
+                <label htmlFor="capacity">Event Capacity:</label>
+                <input
+                    type="number"
+                    id="capacity"
+                    name="capacity"
+                    value={eventData.capacity}
+                    onChange={handleInputChange}
+                    required
+                />
 
                 <select 
                     className='events'
