@@ -12,6 +12,7 @@ const Dashboard = () => {
                         <li><Link to="/event-form">Create An Event</Link></li>
                         <li><Link to="/register-event">Register Events</Link></li>
                         <li><Link to="/view-registrations">View Registrations</Link></li>
+                        <li><Link to="/my-tickets">My Tickets</Link></li>
                     </ul>
                 </nav>
             </aside>

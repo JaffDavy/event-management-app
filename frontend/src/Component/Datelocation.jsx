@@ -121,7 +121,7 @@ const Datelocation = () => {
 
             if (response.ok) {
                 console.log('Event submitted successfully');
-                navigate('/');  // Navigate to the main page to see the new event
+                navigate('/event-page'); 
             } else {
                 const errorData = await response.json();
                 setError(`Failed to submit event: ${errorData.error}`);
