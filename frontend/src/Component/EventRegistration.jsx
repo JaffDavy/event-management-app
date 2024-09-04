@@ -10,10 +10,9 @@ const EventRegistration = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch available events
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://localhost:5000/event/events');
+                const response = await fetch('http://localhost:5000/event/events'); 
                 if (response.ok) {
                     const data = await response.json();
                     setEvents(data);
@@ -25,11 +24,10 @@ const EventRegistration = () => {
             }
         };
 
-        // Fetch user registrations
         const fetchUserRegistrations = async () => {
             try {
-                const userId = 1; 
-                const response = await fetch(`http://localhost:5000/users/${userId}/registrations`);
+                const userId = 1;
+                const response = await fetch(`http://localhost:5000/event/users/${userId}/registrations`);
                 if (response.ok) {
                     const data = await response.json();
                     setUserRegistrations(data);
@@ -45,30 +43,6 @@ const EventRegistration = () => {
         fetchUserRegistrations().finally(() => setLoading(false));
     }, []);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        if (!title || !summary || !startDay || !endDay || !location || !capacity) {
-            setError('All fields are required');
-            return;
-        }
-    
-        // Ensure event capacity is checked before allowing registration
-        try {
-            const response = await fetch('http://localhost:5000/event/events/' + event_id);
-            const event = await response.json();
-    
-            if (event.registered_count >= event.capacity) {
-                setError('This event is fully booked');
-                return;
-            }
-    
-            // Proceed with registration
-        } catch (error) {
-            setError('Error checking event capacity');
-        }
-    }
-
     const handleRegister = async () => {
         if (!selectedEvent) {
             setError('Please select an event to register for.');
@@ -76,20 +50,29 @@ const EventRegistration = () => {
         }
 
         try {
-            const userId = 1; // Replace with actual user ID
-            const response = await fetch('http://localhost:5000/event/registrations', {
+            const userId = 1; 
+            const response = await fetch(`http://localhost:5000/events/${selectedEvent}`);
+            const event = await response.json();
+
+            if (event.registered_count >= event.capacity) {
+                setError('This event is fully booked');
+                return;
+            }
+
+            // Register the user
+            const registerResponse = await fetch('http://localhost:5000/events/${selectedEvent}/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ user_id: userId, event_id: selectedEvent }),
+                body: JSON.stringify({ user_id: userId }),
             });
 
-            if (response.ok) {
+            if (registerResponse.ok) {
                 console.log('Registered successfully');
-                navigate('/user-registrations'); // Redirect to the user registrations page or refresh the data
+                navigate('/user-registrations');
             } else {
-                const errorData = await response.json();
+                const errorData = await registerResponse.json();
                 setError(`Failed to register: ${errorData.error}`);
                 console.error('Failed to register:', errorData);
             }
@@ -150,7 +133,7 @@ const EventRegistration = () => {
                         ) : (
                             userRegistrations.map(reg => (
                                 <li key={reg.registration_id}>
-                                    {reg.EventTitle} - {reg.status}
+                                    {reg.eventtitle} - {reg.status} {/* Corrected property name */}
                                     <button onClick={() => handleCancelRegistration(reg.registration_id)}>
                                         Cancel Registration
                                     </button>
