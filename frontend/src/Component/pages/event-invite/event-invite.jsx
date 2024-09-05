@@ -8,7 +8,7 @@ function EventInvite() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/event/event-invite/${id}`)
+    fetch(`http://localhost:5000/event/events-invite/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Event not found');

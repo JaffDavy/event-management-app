@@ -34,6 +34,7 @@ function EventDetail() {
       }
       return response.json();
     })
+  
     .then((data) => {
       alert(willAttend ? 'You are attending the event!' : 'You have declined the invitation.');
       // Optionally, navigate back or update state to reflect the change

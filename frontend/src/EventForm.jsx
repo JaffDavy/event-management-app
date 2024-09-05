@@ -11,7 +11,7 @@ const EventForm = () => {
         location: '',
         description: '',
         category_id: '',
-        capacity: '' // Add capacity to the eventData state
+        capacity: '' 
     });
     const [categories, setCategories] = useState([]);
     const [mapCenter, setMapCenter] = useState({ lat: 3.8667, lng: 11.5167 });
