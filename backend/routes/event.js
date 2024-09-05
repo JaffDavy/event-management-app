@@ -27,32 +27,32 @@ const storage = multer.diskStorage({
 
 router.post('/events', upload.single('image'), async (req, res) => {
     try {
-      const { title, summary, date, location, category_id, capacity } = req.body;
-  
-      // Validate required fields
-      if (!title || !summary || !date || !location || !category_id || capacity === undefined) {
-        return res.status(400).json({ 
-          error: 'Event title, summary, date, location, category_id, and capacity are required' 
-        });
-      }
-  
-      // Access the uploaded image URL from Cloudinary
-      const imageUrl = req.file ? req.file.path : null;
-  
-      // Insert the event data into the database
-      const result = await pool.query(
-        `INSERT INTO Events (EventTitle, EventSummary, EventDate, EventLocation, category_id, Capacity, EventImage) 
+        const { title, summary, date, location, category_id, capacity } = req.body;
+
+        // Validate required fields
+        if (!title || !summary || !date || !location || !category_id || capacity === undefined) {
+            return res.status(400).json({
+                error: 'Event title, summary, date, location, category_id, and capacity are required'
+            });
+        }
+
+        // Access the uploaded image URL from Cloudinary
+        const imageUrl = req.file ? req.file.path : null;
+
+        // Insert the event data into the database
+        const result = await pool.query(
+            `INSERT INTO Events (EventTitle, EventSummary, EventDate, EventLocation, category_id, Capacity, EventImage) 
          VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-        [title, summary, date, location, category_id, capacity, imageUrl]
-      );
-  
-      // Respond with the created event
-      res.status(201).json(result.rows[0]);
+            [title, summary, date, location, category_id, capacity, imageUrl]
+        );
+
+        // Respond with the created event
+        res.status(201).json(result.rows[0]);
     } catch (error) {
-      console.error('Error creating event:', error);
-      res.status(500).json({ error: 'Failed to create event' });
+        console.error('Error creating event:', error);
+        res.status(500).json({ error: 'Failed to create event' });
     }
-  });
+});
 
 
 // Get all events
@@ -227,13 +227,16 @@ router.get('/categories', async (req, res) => {
 });
 
 
-// Get all accepted tickets
+// Get all accepted tickets with registration details
 router.get('/tickets', async (req, res, next) => {
     try {
         const result = await pool.query(`
-            SELECT t.TicketID, t.Status, e.EventTitle, e.EventDate, e.EventLocation
+            SELECT t.TicketID, t.Status, e.EventTitle, e.start_date, e.end_date, 
+            e.EventLocation, r.fullname, r.Email
             FROM Tickets t
             JOIN Events e ON t.EventID = e.EventID
+            JOIN Registration r ON t.RegistrationID = r.ID
+            WHERE t.Status = 'accepted'
         `);
 
         res.json(result.rows);
@@ -242,4 +245,6 @@ router.get('/tickets', async (req, res, next) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
 export default router;

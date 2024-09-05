@@ -6,18 +6,22 @@ const TicketCard = ({ ticket }) => {
     return (
         <div className="ticket-card">
             <h3>{ticket.EventTitle}</h3>
-            <p>Date: {new Date(ticket.EventDate).toLocaleDateString()}</p>
+            <p>Start Date: {new Date(ticket.start_date).toLocaleDateString()}</p>
+            <p>End Date: {new Date(ticket.end_date).toLocaleDateString()}</p>
             <p>Location: {ticket.EventLocation}</p>
-            <p>Purchased by: {ticket.UserName}</p>
-            <p>Purchase Date: {new Date(ticket.PurchaseDate).toLocaleString()}</p>
+            <p>Purchased by: {ticket.fullname}</p>
+            <p>Email: {ticket.Email}</p>
+            <p>Status: {ticket.Status}</p>
         </div>
     );
 };
 
+
 const TicketsPage = () => {
     const [tickets, setTickets] = useState([]);
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -25,12 +29,14 @@ const TicketsPage = () => {
                 const response = await fetch('http://localhost:5000/event/tickets');
                 if (!response.ok) {
                     throw new Error('Failed to fetch tickets');
-                }
+                } 
                 const data = await response.json();
                 setTickets(data);
             } catch (error) {
                 console.error('Error fetching tickets:', error);
                 setError('Error fetching tickets');
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -38,8 +44,12 @@ const TicketsPage = () => {
     }, []);
 
     const handleBackToHome = () => {
-        navigate('/'); // Navigate to the home page
+        navigate('/');
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     if (error) {
         return <div>{error}</div>;
@@ -49,9 +59,13 @@ const TicketsPage = () => {
         <div className="tickets-page">
             <h1>Accepted Tickets</h1>
             <div className="tickets-container">
-                {tickets.map(ticket => (
-                    <TicketCard key={ticket.TicketID} ticket={ticket} />
-                ))}
+                {tickets.length > 0 ? (
+                    tickets.map(ticket => (
+                        <TicketCard key={ticket.TicketID} ticket={ticket} />
+                    ))
+                ) : (
+                    <p>No tickets available.</p>
+                )}
             </div>
             <button className="back-button" onClick={handleBackToHome}>
                 Back to Home
