@@ -11,7 +11,7 @@ const EventForm = () => {
         location: '',
         description: '',
         category_id: '',
-        capacity: '' // Add capacity to the eventData state
+        capacity: '' 
     });
     const [image, setImage] = useState(null); // State to hold the selected image file
     const [categories, setCategories] = useState([]);

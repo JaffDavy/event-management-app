@@ -7,11 +7,11 @@ const Datelocation = () => {
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [location, setLocation] = useState('');
-    const [capacity, setCapacity] = useState('');  // State for capacity
-    const [categories, setCategories] = useState([]); 
+    const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [capacity, setCapacity] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -121,7 +121,7 @@ const Datelocation = () => {
 
             if (response.ok) {
                 console.log('Event submitted successfully');
-                navigate('/event-page'); 
+                navigate('/');  // Navigate to the main page to see the new event
             } else {
                 const errorData = await response.json();
                 setError(`Failed to submit event: ${errorData.error}`);

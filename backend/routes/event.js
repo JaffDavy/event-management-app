@@ -16,12 +16,33 @@ const validateCategory = async (category_id) => {
     }
 };
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Directory to save uploaded files
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`); // Rename file to avoid collisions
+// Create an event
+router.post('/events', async (req, res, next) => {
+    try {
+        const { eventtitle, eventsummary, start_date, end_date, eventlocation, category_id, capacity } = req.body;
+
+        if (!eventtitle || !eventsummary || !start_date || !end_date || !eventlocation || !category_id || capacity == null) {
+            return res.status(400).json({ error: 'All event fields, including capacity, are required' });
+        }
+
+        if (isNaN(capacity) || capacity < 1) {
+            return res.status(400).json({ error: 'Capacity must be a positive integer' });
+        }
+
+        // Validate category
+        const categoryExists = await validateCategory(category_id);
+        if (!categoryExists) {
+            return res.status(400).json({ error: 'Invalid category_id' });
+        }
+
+        const result = await pool.query(
+            'INSERT INTO Events (eventtitle, eventsummary, start_date, end_date, eventlocation, category_id, capacity) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+            [eventtitle, eventsummary, start_date, end_date, eventlocation, category_id, capacity]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        next(error);
     }
 });
 
