@@ -363,7 +363,6 @@ router.post('/invites', async (req, res, next) => {
 // Get all accepted tickets with registration details
 router.get('/tickets', async (req, res, next) => {
     try {
-        // Fetching accepted tickets
         const ticketResult = await pool.query(`
             SELECT t.TicketID, t.Status, e.EventTitle, e.start_date, e.end_date, 
             e.EventLocation, r.fullname, r.Email
@@ -372,28 +371,12 @@ router.get('/tickets', async (req, res, next) => {
             JOIN Registration r ON t.RegistrationID = r.ID
             WHERE t.Status = 'accepted'
         `);
-
-        // Updating the status of an invite (assuming invite_id comes from req.params or req.body)
-        const invite_id = req.body.invite_id || req.query.invite_id;  // Get invite_id from request
-        const inviteResult = await pool.query(
-            'UPDATE Invites SET status = $1 WHERE invite_id = $2 RETURNING *',
-            ['accepted', invite_id]
-        );
-
-        // Check if the invite was updated
-        if (inviteResult.rows.length === 0) {
-            return res.status(404).json({ error: 'Invite not found' });
-        }
-
-        // Respond with the ticket data and the updated invite
-        res.json({
-            tickets: ticketResult.rows,
-            updatedInvite: inviteResult.rows[0],
-        });
+        res.json({ tickets: ticketResult.rows });
     } catch (error) {
-        next(error);  // Pass the error to the error handler
+        next(error);
     }
 });
+
 
 
 // Reject an invite
@@ -406,7 +389,7 @@ router.put('/invites/:invite_id/reject', async (req, res, next) => {
         }
 
         const result = await pool.query(
-            'UPDATE Invites SET status = $1 WHERE invite_id = $2 RETURNING *',
+            'UPDATE Invites SET status = $1 WHERE inviteid = $2 RETURNING *',
             ['rejected', invite_id]
         );
 
