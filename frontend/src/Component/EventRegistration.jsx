@@ -4,7 +4,7 @@ const EventRegistration = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    event_id: '', 
+    eventtitle: '', 
   });
 
   const [message, setMessage] = useState('');
@@ -43,7 +43,7 @@ const EventRegistration = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // Now sending eventtitle instead of event_id
       });
 
       if (response.ok) {
@@ -51,7 +51,7 @@ const EventRegistration = () => {
         setFormData({
           name: '',
           email: '',
-          event_id: '',
+          eventtitle: '',
         });
       } else {
         const errorData = await response.json();
@@ -91,18 +91,18 @@ const EventRegistration = () => {
         </div>
         
         <div>
-          <label htmlFor="event_id">Select Event:</label>
+          <label htmlFor="eventtitle">Select Event:</label>
           <select
-            id="event_id"
-            name="event_id"
-            value={formData.event_id}
+            id="eventtitle"
+            name="eventtitle"
+            value={formData.eventtitle}
             onChange={handleChange}
             required
           >
             <option value="">Select an event</option>
             {events.map((event) => (
-              <option key={event.id} value={event.id}>
-                {event.eventtitle} {/* Make sure this field matches the backend */}
+              <option key={event.id} value={event.eventtitle}>
+                {event.eventtitle} {/* Adjust to the field used in the backend */}
               </option>
             ))}
           </select>

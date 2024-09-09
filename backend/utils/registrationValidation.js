@@ -9,6 +9,7 @@ const register = Joi.object({
 export default function registrationValidation(req, res, next) {
   try {
     const { error } = register.validate(req.body);
+   
 
     if (error) {
       return res.status(400).send({
