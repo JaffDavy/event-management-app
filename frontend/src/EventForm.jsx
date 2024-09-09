@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import axios from 'axios';
+import "./App.css";
 
 const Marker = ({ text }) => <div>{text}</div>;
 

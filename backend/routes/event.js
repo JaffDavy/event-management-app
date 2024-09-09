@@ -379,6 +379,63 @@ router.post('/invites', async (req, res, next) => {
     }
 });
 
+router.get('/event-invite/:id', async (req, res) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+        if (isNaN(eventId)) {
+            return res.status(404).send('Event not found');
+        }
+        const result = await pool.query('SELECT * FROM Events WHERE EventID = $1', [eventId]);
+        if (result.rows.length === 0) {
+            return res.status(404).send('Event not found');
+        }
+        const event = result.rows[0];
+        res.json({
+            message: `You have been invited to ${event.EventTitle}!`,
+            eventDetails: event
+        });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
+// Mark attendance for an event
+router.post('/events/:id/attend', async (req, res) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+        if (isNaN(eventId)) {
+            return res.status(400).json({ error: 'Invalid event ID' });
+        }
+        const result = await pool.query(
+            'UPDATE Events SET Attendance = COALESCE(Attendance, 0) + 1 WHERE EventID = $1 RETURNING *',
+            [eventId]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+        res.json({ msg: 'Attendance marked', attendance: result.rows[0].attendance });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
+// Decline event attendance
+router.post('/events/:id/decline', async (req, res) => {
+    try {
+        const eventId = parseInt(req.params.id, 10);
+        if (isNaN(eventId)) {
+            return res.status(400).json({ error: 'Invalid event ID' });
+        }
+        const result = await pool.query(
+            'UPDATE Events SET Declined = COALESCE(Declined, 0) + 1 WHERE EventID = $1 RETURNING *',
+            [eventId]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+        res.json({ msg: 'Attendance declined', declined: result.rows[0].declined });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
 
 
 // Get all accepted tickets with registration details
@@ -398,7 +455,51 @@ router.get('/tickets', async (req, res, next) => {
     }
 });
 
-
+router.post('/registrations', async (req, res, next) => {
+    try {
+        const { user_id, eventid } = req.body;
+        if (!user_id || !eventid) {
+            return res.status(400).json({ error: 'User ID and Event ID are required' });
+        }
+        // Check if the event exists and get its details
+        const eventCheck = await pool.query(
+            'SELECT "start_date", "end_date", "capacity" FROM "events" WHERE "event_id" = $1',
+            [eventid]
+        );
+        if (eventCheck.rows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+        const startDate = new Date(eventCheck.rows[0].start_date);
+        const endDate = new Date(eventCheck.rows[0].end_date);
+        const currentDate = new Date();
+        const capacity = eventCheck.rows[0].capacity;
+        // Check if the event has already passed
+        if (currentDate > endDate) {
+            return res.status(400).json({ error: 'Cannot register for past events' });
+        }
+        // Check if it's within 24 hours of the event
+        const registrationCutoff = new Date(startDate.getTime() - 24 * 60 * 60 * 1000);
+        if (currentDate > registrationCutoff) {
+            return res.status(400).json({ error: 'Registration is closed for this event' });
+        }
+        // Check if the event is already at capacity
+        const registrationCount = await pool.query(
+            'SELECT COUNT(*) FROM "registrations" WHERE "event_id" = $1 AND "status" = $2',
+            [event_id, 'registered']
+        );
+        if (parseInt(registrationCount.rows[0].count, 10) >= capacity) {
+            return res.status(400).json({ error: 'Event is already at full capacity' });
+        }
+        // If all checks pass, proceed with registration
+        const result = await pool.query(
+            'INSERT INTO "registrations" ("user_id", "eventid", "status") VALUES ($1, $2, $3) RETURNING *',
+            [user_id, eventid, 'registered']
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+})
 
 // Reject an invite
 router.put('/invites/:invite_id/reject', async (req, res, next) => {

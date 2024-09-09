@@ -12,10 +12,6 @@ const Dashboard = () => {
                         <li><Link to="/event-form">Create An Event</Link></li>
                         <li><Link to="/register-event">Register Events</Link></li>
                         <li><Link to="/view-registrations">View Registrations</Link></li>
-<<<<<<< HEAD
-                        <li><Link to="/my-tickets">My Tickets</Link></li>
-=======
->>>>>>> 887988fb324acb521c7700669b4e3b4982492573
                     </ul>
                 </nav>
             </aside>

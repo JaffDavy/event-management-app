@@ -16,6 +16,7 @@ import TicketsPage from "./Component/pages/tickets-page/tickets";
 import EventRegistration from './Component/EventRegistration';
 import ViewRegistrations from './Component/ViewRegistrations';
 import CancelRegistration from './Component/CancelRegistration';
+import EventForm from "./EventForm";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/eventdashboard" element={<Dashboard />} />
           <Route path="/iconwrapper" element={<IconWrapper />} />
           <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/event-form" element={<EventForm />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
