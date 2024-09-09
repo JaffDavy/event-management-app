@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
 
-const Trend = () => {
+import React, { useEffect, useState } from 'react';
+
+const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +14,6 @@ const Trend = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched data:', data); 
         setEvents(data);
       } catch (error) {
         setError(error.message);
@@ -25,19 +25,19 @@ const Trend = () => {
     fetchEvents();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading events...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      <h1>Event List</h1>
+      <h1>Events</h1>
       <ul>
         {events.map((event) => (
-          <li key={event.id}>{event.title}</li> 
+          <li key={event.id}>{event.name}</li>
         ))}
       </ul>
     </div>
   );
 };
 
-export default Trend;
+export default Events;
