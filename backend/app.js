@@ -3,14 +3,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'; 
-import indexRouter from './routes/auth.js'; 
+import indexRouter from './routes/auth.js';
 import eventRouter from './routes/event.js';
 import registerRouter from './routes/register.js'
 import ticketRouter from './routes/ticket.js'
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
-
 const app = express();
 
 // Middlewarez
@@ -27,7 +26,7 @@ app.use('/ticket', ticketRouter)
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  next(createError(404)); 
 });
 
 // Error handler

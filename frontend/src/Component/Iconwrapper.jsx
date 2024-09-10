@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function IconWrapper() {
+function   IconWrapper() {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function IconWrapper() {
           categories.map((category) => (
             <div key={category.id} className="icon-item">
               <button
-                onClick={() => navigate(`/category/${category.name}`)} // Use navigate onClick
+                onClick={() => navigate(`/category/${category.name}`)}
                 className="icon-button"
                 aria-label={`View events for ${category.name}`}
               >

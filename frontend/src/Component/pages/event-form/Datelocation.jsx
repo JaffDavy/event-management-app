@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 const Datelocation = () => {
     const [map, setMap] = useState(null);
     const [geocoder, setGeocoder] = useState(null);
@@ -218,11 +219,12 @@ const Datelocation = () => {
                 </select>
 
                 <button type="submit">Submit</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p className="error">{error}</p>}
             </form>
 
-            <div id="map" style={{ height: '400px', width: '100%' }}></div>
+            <div id="map" className="map"></div>
         </div>
+
     );
 };
 

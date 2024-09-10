@@ -137,6 +137,13 @@ header {
   background-color: #45a049;
 }
 
+.event-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .event-card {

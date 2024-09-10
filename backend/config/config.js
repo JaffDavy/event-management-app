@@ -1,7 +1,9 @@
 import pg from "pg";
 import dotenv from "dotenv";
+
 import path from "path"
 dotenv.config();
+
 const { Pool } = pg;
 
 const envFile =
@@ -21,8 +23,7 @@ const pool = new Pool({
 pool
   .connect()
   .then(() => {
-    console.log("Connected to the database on port 5432")
-   
+    console.log("Connected to the database on port 5432");
   })
   .catch((err) => console.error(err));
 

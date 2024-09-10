@@ -1,6 +1,6 @@
-import Datelocation from "./Datelocation";
 import { useNavigate } from 'react-router-dom';
-
+import './eventForm.css'
+import Datelocation from './Datelocation';
 
 const EventForm = () => {
 
@@ -20,3 +20,4 @@ const EventForm = () => {
 }
 
 export default EventForm;
+EventForm

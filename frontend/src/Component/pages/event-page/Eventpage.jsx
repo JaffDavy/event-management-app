@@ -63,6 +63,7 @@ function Eventpage() {
         {events.length > 0 ? (
           events.map((event) => (
             <div key={event.eventid} className="event-card" onClick={() => handleEventClick(event.eventid)}>
+              <img src={event.eventimage} alt={event.eventtitle} className="event-image" />
               <h2 className="event-title">{event.eventtitle}</h2>
               {/* Displaying both start_date and end_date */}
               <p className="event-date">
@@ -110,6 +111,7 @@ function Eventpage() {
       </div>
     </div>
   );
+  
 }
 
 export default Eventpage;

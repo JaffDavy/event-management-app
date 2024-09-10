@@ -37,6 +37,13 @@ function NavBar() {
             >
               Create Event
             </Nav.Link>
+            <Nav.Link
+              href=""
+              className={isAuthenticated ? '' : 'disabled'}
+              onClick={() => isAuthenticated ? navigate('/tickets') : null}
+            >
+              Tickets
+              </Nav.Link>
             <NavDropdown title="Help Center" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Help Center</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact your event organizer</NavDropdown.Item>

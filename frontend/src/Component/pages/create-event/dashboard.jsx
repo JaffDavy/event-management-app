@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './dashboard.css';
@@ -27,7 +27,7 @@ function EventDashboard() {
 
   const handleViewEvent = (eventId) => {
     navigate(`/event/${eventId}`);
-  };
+  }; 
 
   const handleEditEvent = (eventId) => {
     navigate(`/event-form/${eventId}`); // Adjust this route to match your edit form route

@@ -53,8 +53,8 @@ function EventDetail() {
     <>
       <div className="event-detail">
         <h1 className="event-title">{event.eventtitle}</h1>
-        <p className="event-date"><strong>Date:</strong> {new Date(event.start_day).toLocaleDateString()}</p>
-        <p className="event-date"><strong>Date:</strong> {new Date(event.end_day).toLocaleDateString()}</p>
+        <p className="event-date"><strong>Start Date:</strong> {new Date(event.start_date).toLocaleDateString()}</p>
+        <p className="event-date"><strong>End Date:</strong> {new Date(event.end_date).toLocaleDateString()}</p>
         <p className="event-location"><strong>Location:</strong> {event.eventlocation}</p>
         <p className="event-summary"><strong>Summary:</strong> {event.eventsummary}</p>
         <p className="event-attendance"><strong>Attendance:</strong> {event.attendance}</p>
