@@ -4,16 +4,17 @@ const EventRegistration = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    eventtitle: '', 
+    eventtitle: '', // Correct field for event title
   });
 
   const [message, setMessage] = useState('');
   const [events, setEvents] = useState([]);
 
+  // Fetch events when component mounts
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:5000/event/events');
+        const response = await fetch('http://localhost:5000/event/events'); // Adjust endpoint
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -21,12 +22,14 @@ const EventRegistration = () => {
         setEvents(data);
       } catch (error) {
         console.error('Error fetching events:', error);
+        setMessage('Failed to fetch events.');
       }
     };
 
     fetchEvents();
   }, []);
 
+  // Handle form field changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -34,20 +37,22 @@ const EventRegistration = () => {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/register/register', {
+      const response = await fetch('http://localhost:5000/register/register', { // Adjust endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // Now sending eventtitle instead of event_id
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setMessage('Successfully registered for the event!');
+        const result = await response.json();
+        setMessage(`Successfully registered! Ticket Number: ${result.ticket.ticket_number}`);
         setFormData({
           name: '',
           email: '',
@@ -101,8 +106,8 @@ const EventRegistration = () => {
           >
             <option value="">Select an event</option>
             {events.map((event) => (
-              <option key={event.id} value={event.eventtitle}>
-                {event.eventtitle} {/* Adjust to the field used in the backend */}
+              <option key={event.event_id} value={event.eventtitle}>
+                {event.eventtitle} {/* Ensure this matches your event data */}
               </option>
             ))}
           </select>
