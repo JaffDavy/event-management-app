@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const app = require('../app'); // Adjust the path to where your Express app is defined
+ // Adjust the path to where your Express app is defined
+import app from ('../app')
 const debug = require('debug')('myapp:server');
 const http = require('http');
 
