@@ -64,7 +64,10 @@ function Eventpage() {
           events.map((event) => (
             <div key={event.eventid} className="event-card" onClick={() => handleEventClick(event.eventid)}>
               <h2 className="event-title">{event.eventtitle}</h2>
-              <p className="event-date">{new Date(event.eventdate).toLocaleDateString()}</p>
+              {/* Displaying both start_date and end_date */}
+              <p className="event-date">
+                {new Date(event.start_date).toLocaleDateString()} - {new Date(event.end_date).toLocaleDateString()}
+              </p>
               <p className="event-location">{event.eventlocation}</p>
               <p className="event-summary">{event.eventsummary.substring(0, 100)}...</p>
               <div className="event-card-footer">

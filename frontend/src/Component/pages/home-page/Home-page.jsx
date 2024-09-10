@@ -2,8 +2,7 @@ import '../home-page/homepage.css'
 import NavBar from "../../Navbar";
 import Iconwrapper from '../../Iconwrapper'
 import Trend from '../../Toptrendberlin'
-import Moreevents from '../../moreevents'
-import Popular from '../../popularcitys'
+
 import About from '../../About'
 
 function Homepage() {
@@ -20,8 +19,8 @@ function Homepage() {
       </div>
       <Iconwrapper />
       <Trend />
-      <Moreevents />
-      <Popular />
+      
+    
       <About />
     </body>
   </>
