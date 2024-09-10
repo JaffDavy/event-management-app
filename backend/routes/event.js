@@ -442,15 +442,12 @@ router.post('/events/:id/decline', async (req, res) => {
 router.get('/tickets', async (req, res, next) => {
     try {
         const ticketResult = await pool.query(`
-            SELECT t.TicketID, t.Status, e.EventTitle, e.start_date, e.end_date, 
-            e.EventLocation, r.fullname, r.Email
-            FROM Tickets t
-            JOIN Events e ON t.EventID = e.EventID
-            JOIN Registration r ON t.RegistrationID = r.ID
-            WHERE t.Status = 'accepted'
+            select * from tickets
         `);
+        // Respond with the retrieved tickets
         res.json({ tickets: ticketResult.rows });
     } catch (error) {
+        // Pass the error to the error handling middleware
         next(error);
     }
 });

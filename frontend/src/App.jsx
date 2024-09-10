@@ -16,7 +16,7 @@ import TicketsPage from "./Component/pages/tickets-page/tickets";
 import EventRegistration from './Component/EventRegistration';
 import ViewRegistrations from './Component/ViewRegistrations';
 import CancelRegistration from './Component/CancelRegistration';
-import EventForm from "./EventForm";
+import EventForm from "./Component/pages/event-form/EventForm";
 
 function App() {
   return (

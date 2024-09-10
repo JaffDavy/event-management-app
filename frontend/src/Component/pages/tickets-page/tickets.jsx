@@ -5,17 +5,16 @@ import { useNavigate } from 'react-router-dom';
 const TicketCard = ({ ticket }) => {
     return (
         <div className="ticket-card">
-            <h3>{ticket.EventTitle}</h3>
+            <h3>{ticket.eventtitle || ticket.EventTitle}</h3>
             <p>Start Date: {new Date(ticket.start_date).toLocaleDateString()}</p>
             <p>End Date: {new Date(ticket.end_date).toLocaleDateString()}</p>
-            <p>Location: {ticket.EventLocation}</p>
-            <p>Purchased by: {ticket.fullname}</p>
-            <p>Email: {ticket.Email}</p>
-            <p>Status: {ticket.Status}</p>
+            <p>Location: {ticket.eventlocation || ticket.EventLocation}</p>
+            <p>Purchased by: {ticket.fullname || ticket.fullname}</p>
+            <p>Email: {ticket.user_email || ticket.Email}</p>
+            <p>Status: {ticket.status || ticket.Status}</p>
         </div>
     );
 };
-
 
 const TicketsPage = () => {
     const [tickets, setTickets] = useState([]);
@@ -29,7 +28,7 @@ const TicketsPage = () => {
                 const response = await fetch('http://localhost:5000/event/tickets');
                 if (!response.ok) {
                     throw new Error('Failed to fetch tickets');
-                } 
+                }
                 const data = await response.json();
                 setTickets(data);
             } catch (error) {
@@ -61,7 +60,7 @@ const TicketsPage = () => {
             <div className="tickets-container">
                 {tickets.length > 0 ? (
                     tickets.map(ticket => (
-                        <TicketCard key={ticket.TicketID} ticket={ticket} />
+                        <TicketCard key={ticket.ticket_id || ticket.TicketID} ticket={ticket} /> 
                     ))
                 ) : (
                     <p>No tickets available.</p>

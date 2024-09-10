@@ -16,12 +16,12 @@ router.post('/register', async (req, res) => {
     console.log('Transaction started.');
 
     // Check if the user exists by email
-    let userResult = await pool.query('SELECT email FROM users WHERE email = $1', [email]);
+    let userResult = await pool.query('SELECT email FROM registration WHERE email = $1', [email]);
 
     if (userResult.rows.length === 0) {
       // If user does not exist, insert them into the users table
       const insertUserQuery = `
-        INSERT INTO users (email, full_name)
+        INSERT INTO registration (email, full_name)
         VALUES ($1, $2)
         RETURNING email;
       `;
@@ -32,15 +32,15 @@ router.post('/register', async (req, res) => {
     }
 
     // Get event_id, start_date, and end_date based on eventtitle
-    const eventResult = await pool.query('SELECT event_id, start_date, end_date FROM events WHERE eventtitle = $1', [eventtitle]);
+    const eventResult = await pool.query('SELECT eventid, start_date, end_date FROM events WHERE eventtitle = $1', [eventtitle]);
 
     if (eventResult.rows.length === 0) {
       console.log('Event not found.');
       return res.status(404).json({ error: 'Event not found' });
     }
 
-    const { event_id, start_date, end_date } = eventResult.rows[0]; // Extract event details
-    console.log('Event found:', { event_id, start_date, end_date });
+    const { eventid, start_date, end_date } = eventResult.rows[0]; // Extract event details
+    console.log('Event found:', { eventid, start_date, end_date });
 
     // Convert start_date and end_date to Date objects for comparison
     const currentDate = new Date();
@@ -54,9 +54,9 @@ router.post('/register', async (req, res) => {
     }
 
     // Check if the user is already registered for the event
-    const registrationResult = await pool.query(
-      'SELECT * FROM registrations WHERE user_email = $1 AND event_id = $2',
-      [email, event_id]
+     registrationResult = await pool.query(
+      'SELECT * FROM registrations WHERE user_email = $1 AND eventid = $2',
+      [email, eventid]
     );
 
     if (registrationResult.rows.length > 0) {
@@ -66,17 +66,30 @@ router.post('/register', async (req, res) => {
 
     // Register the user for the event (using email as foreign key)
     const insertRegistrationQuery = `
-      INSERT INTO registrations (user_email, event_id)
-      VALUES ($1, $2);
+      INSERT INTO registrations (user_email, eventid)
+      VALUES ($1, $2)
+      RETURNING *;
     `;
-    await pool.query(insertRegistrationQuery, [email, event_id]);
+    const registrationResult = await pool.query(insertRegistrationQuery, [email, eventid]);
     console.log('User registered for event.');
+
+    // Generate a ticket for the user
+    const insertTicketQuery = `
+      INSERT INTO tickets (eventid, user_email, status)
+      VALUES ($1, $2, 'Accepted')
+      RETURNING *;
+    `;
+    const ticketResult = await pool.query(insertTicketQuery, [eventid, email]);
+    console.log('Ticket generated:', ticketResult.rows[0]);
 
     // Commit transaction
     await pool.query('COMMIT');
     console.log('Transaction committed.');
 
-    res.status(201).json({ message: 'User successfully registered for the event' });
+    res.status(201).json({ 
+      message: 'User successfully registered for the event',
+      ticket: ticketResult.rows[0]  // Include ticket details in the response
+    });
 
   } catch (error) {
     // If there is any error, rollback the transaction
