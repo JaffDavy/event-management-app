@@ -6,6 +6,7 @@ import cors from 'cors';
 import indexRouter from './routes/auth.js'; 
 import eventRouter from './routes/event.js';
 import registerRouter from './routes/register.js'
+import ticketRouter from './routes/ticket.js'
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use('/auth', indexRouter);
 app.use('/event', eventRouter);
 app.use('/register', registerRouter)
+app.use('/ticket', ticketRouter)
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
