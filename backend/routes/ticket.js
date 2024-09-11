@@ -1,31 +1,44 @@
 import express from 'express';
 import pool from '../config/config.js';
 const router = express.Router();
-router.use(express.json());
 
-router.get('/:email', async (req, res) => {
+// Route to retrieve tickets by user email
+router.get('/tickets/:email', async (req, res) => {
   const { email } = req.params;
 
-  if (!email) {
-    return res.status(400).json({ error: 'Email is required' });
-  }
-
   try {
-    // Retrieve tickets for the user
-    const ticketsResult = await pool.query(
-      'SELECT t.ticket_number, e.eventtitle, t.status FROM tickets t JOIN events e ON t.event_id = e.event_id WHERE t.user_id = (SELECT user_id FROM users WHERE email = $1)',
-      [email]
-    );
+    // Fetch user_id from the users table using the email
+    const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
 
-    if (ticketsResult.rows.length === 0) {
-      return res.status(404).json({ error: 'No tickets found for this email' });
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
     }
 
-    // Send the tickets as the response
-    res.status(200).json({ tickets: ticketsResult.rows });
+    const userId = userResult.rows[0].id;
+
+    // Retrieve tickets with event details
+    const ticketQuery = `
+      SELECT
+        t.ticket_number,
+        e.eventtitle AS event_name,
+        t.status,
+        u.email,
+        u.full_name
+      FROM tickets t
+      JOIN users u ON u.id = t.user_id
+      JOIN events e ON e.event_id = t.event_id
+      WHERE t.user_id = $1;
+    `;
+    const ticketResult = await pool.query(ticketQuery, [userId]);
+
+    if (ticketResult.rows.length === 0) {
+      return res.status(404).json({ message: 'No tickets found for this user.' });
+    }
+
+    res.status(200).json(ticketResult.rows);
   } catch (error) {
-    console.error('Error retrieving tickets:', error);
-    res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    console.error('Error fetching tickets:', error);
+    res.status(500).json({ error: 'Failed to retrieve tickets' });
   }
 });
 

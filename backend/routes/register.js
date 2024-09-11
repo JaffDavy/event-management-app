@@ -1,5 +1,6 @@
 import express from 'express';
 import pool from '../config/config.js';
+
 const router = express.Router();
 router.use(express.json());
 
@@ -16,7 +17,7 @@ router.post('/register', async (req, res) => {
     console.log('Transaction started.');
 
     // Check if the user exists by email
-    let userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    let userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
 
     let userId;
     if (userResult.rows.length === 0) {
@@ -24,13 +25,13 @@ router.post('/register', async (req, res) => {
       const insertUserQuery = `
         INSERT INTO users (email, full_name)
         VALUES ($1, $2)
-        RETURNING email;
+        RETURNING id;
       `;
       const insertUserResult = await pool.query(insertUserQuery, [email, name]);
-      userId = insertUserResult.rows[0].user_id;
+      userId = insertUserResult.rows[0].id; // Assuming 'id' is the column name
       console.log('New user inserted.');
     } else {
-      userId = userResult.rows[0].user_id;
+      userId = userResult.rows[0].id;
       console.log('User already exists.');
     }
 
